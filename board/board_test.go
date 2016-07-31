@@ -10,7 +10,7 @@ func TestDefaultSize(t *testing.T) {
   }
 }
 
-func TestCustomSize(t *testing.T) {
+func TestSize(t *testing.T) {
   board := Board{size: 16}
   boardSize := board.Size()
   if boardSize != 16 {
@@ -19,7 +19,15 @@ func TestCustomSize(t *testing.T) {
 }
 
 func TestMarkers(t *testing.T) {
-  board := Board{markers: [2]string{"X", "Y"}}
+  board := Board{markers: [2]string{"A", "B"}}
+  boardMarkers := board.Markers()
+  if boardMarkers != [2]string{"A", "B"} {
+    t.Error("Expected markers to be 'A' and 'B', but they were", boardMarkers)
+  }
+}
+
+func TestDefaultMarkers(t *testing.T) {
+  board := new(Board)
   boardMarkers := board.Markers()
   if boardMarkers != [2]string{"X", "Y"} {
     t.Error("Expected markers to be 'X' and 'Y', but they were", boardMarkers)
