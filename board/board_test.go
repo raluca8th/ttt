@@ -1,6 +1,7 @@
 package board
 
 import "testing"
+import "reflect"
 
 func TestDefaultSize(t *testing.T) {
   board := NewBoard(Params{})
@@ -60,5 +61,18 @@ func TestSpotIsAvailable(t *testing.T) {
   board.FillSpot(2, "X")
   if spotIsAvailable := board.SpotIsAvailable(2); spotIsAvailable != false {
     t.Error("Expected SpotIsAvailable to be false, but it was", spotIsAvailable)
+  }
+}
+
+func TestAvailableSpots(t *testing.T) {
+  board := NewBoard(Params{})
+  board.FillSpot(2, "X")
+  board.FillSpot(4, "Y")
+  board.FillSpot(8, "X")
+  expectedResult := make([]int, 0, 9)
+  expectedResult = append(expectedResult, 0, 1, 3, 5, 6, 7)
+  availableSpots := board.AvailableSpots()
+  if !reflect.DeepEqual(availableSpots, expectedResult) {
+    t.Error("Expected {0, 1, 3, 5, 6, 7}, but it was", availableSpots)
   }
 }

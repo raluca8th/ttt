@@ -34,6 +34,16 @@ func (b Board) SpotIsAvailable(spot int) bool{
   return b.surface[spot] == ""
 }
 
+func (b Board) AvailableSpots() []int{
+  availableSpots := make([]int, 0, b.Size())
+  for i, spot := range b.Surface() {
+    if spot == "" {
+      availableSpots = append(availableSpots, i)
+    }
+  }
+  return availableSpots
+}
+
 func (b *Board) setSurface() {
   b.surface = make([]string, b.Size())
 }
