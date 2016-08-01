@@ -26,6 +26,10 @@ func (b Board) Surface() []string {
   return b.surface
 }
 
+func (b *Board) FillSpot(spot int, marker string) {
+  b.surface[spot] = marker
+}
+
 func (b *Board) setSurface() {
   b.surface = make([]string, b.Size())
 }
@@ -40,4 +44,9 @@ func (b *Board) setDefaultMarkers() {
   if b.markers == [2]string{} {
     b.markers = [2]string{"X", "Y"}
   }
+}
+
+type Params struct {
+  size int
+  markers [2]string
 }

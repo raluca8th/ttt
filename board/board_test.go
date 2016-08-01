@@ -2,10 +2,6 @@ package board
 
 import "testing"
 
-type Params struct {
-  size int
-  markers [2]string
-}
 
 func TestDefaultSize(t *testing.T) {
   board := NewBoard(Params{})
@@ -48,5 +44,14 @@ func TestNewBoardSurface(t *testing.T) {
 
   if spot := boardSurface[3]; spot != "" {
     t.Error("Expected spot to be empty but it was", spot)
+  }
+}
+
+func TestFillSpot(t *testing.T) {
+  board := NewBoard(Params{})
+  boardSurface := board.Surface()
+  board.FillSpot(2, "X")
+  if spot := boardSurface[2]; spot != "X" {
+    t.Error("Expected marker to be 'X'  but it was", spot)
   }
 }
