@@ -30,6 +30,10 @@ func (b *Board) FillSpot(spot int, marker string) {
   b.surface[spot] = marker
 }
 
+func (b Board) SpotIsAvailable(spot int) bool{
+  return b.surface[spot] == ""
+}
+
 func (b *Board) setSurface() {
   b.surface = make([]string, b.Size())
 }

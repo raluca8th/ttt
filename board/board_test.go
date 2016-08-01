@@ -2,7 +2,6 @@ package board
 
 import "testing"
 
-
 func TestDefaultSize(t *testing.T) {
   board := NewBoard(Params{})
   boardSize := board.Size()
@@ -53,5 +52,13 @@ func TestFillSpot(t *testing.T) {
   board.FillSpot(2, "X")
   if spot := boardSurface[2]; spot != "X" {
     t.Error("Expected marker to be 'X'  but it was", spot)
+  }
+}
+
+func TestSpotIsAvailable(t *testing.T) {
+  board := NewBoard(Params{})
+  board.FillSpot(2, "X")
+  if spotIsAvailable := board.SpotIsAvailable(2); spotIsAvailable != false {
+    t.Error("Expected SpotIsAvailable to be false, but it was", spotIsAvailable)
   }
 }
