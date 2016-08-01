@@ -126,3 +126,20 @@ func TestWinningMarkerBoardNotSolved(t *testing.T) {
     t.Error("Expected Winning Marker to be '', but it was", winningMarker)
   }
 }
+
+
+func TestIsBoardTied(t *testing.T) {
+  board := NewBoard(Params{})
+  board.FillSpot(0, "X")
+  board.FillSpot(1, "Y")
+  board.FillSpot(2, "X")
+  board.FillSpot(3, "Y")
+  board.FillSpot(4, "Y")
+  board.FillSpot(5, "X")
+  board.FillSpot(6, "X")
+  board.FillSpot(7, "X")
+  board.FillSpot(8, "Y")
+  if isTiedBoard := board.IsTiedBoard(); isTiedBoard != true {
+    t.Error("Expected IsTiedBoard to return true, but it returned", isTiedBoard)
+  }
+}

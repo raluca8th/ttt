@@ -56,6 +56,10 @@ func (b Board) WinningMarker() string{
   return checkBoard
 }
 
+func (b Board) IsTiedBoard() bool{
+  return len(b.AvailableSpots()) == 0 && b.WinningMarker()== ""
+}
+
 func (b Board) checkRows() string {
   incrementor := b.incrementor()
   for i := 0; i < b.Size(); i += incrementor{
