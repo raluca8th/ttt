@@ -1,8 +1,6 @@
 package board
 
-import (
-  "math"
-)
+import "math"
 
 type Board struct {
   size int
@@ -30,8 +28,8 @@ func (b Board) Surface() []string {
   return b.surface
 }
 
-func (b *Board) FillSpot(spot int, marker string) {
-  b.surface[spot] = marker
+func (b *Board) FillSpot(spot int) {
+  b.surface[spot] = b.NextMarker()
 }
 
 func (b Board) SpotIsAvailable(spot int) bool{
@@ -129,6 +127,25 @@ func (b *Board) setDefaultMarkers() {
   }
 }
 
+func (b Board) transposeBoard() []string{
+  transposedBoard := make([]string, 0)
+  incrementor := b.incrementor()
+  for i := 0; i < incrementor; i++ {
+    for j:= 0; j < b.Size(); j += incrementor {
+      transposedBoard = append(transposedBoard, b.Surface()[i + j])
+    }
+  }
+  return transposedBoard
+}
+
+func checkRow(row []string) string {
+  marker := ""
+  if identicalElements(row) {
+    marker = row[0]
+  }
+  return marker
+}
+
 func identicalElements(boardSubSection []string) bool{
   elementsAreIdentical := false
   elementsMap := make(map[string]int)
@@ -143,31 +160,12 @@ func identicalElements(boardSubSection []string) bool{
   return elementsAreIdentical
 }
 
-func checkRow(row []string) string {
-  marker := ""
-  if identicalElements(row) {
-    marker = row[0]
-  }
-  return marker
-}
-
-func (b Board) transposeBoard() []string{
-  transposedBoard := make([]string, 0)
-  incrementor := b.incrementor()
-  for i := 0; i < incrementor; i++ {
-    for j:= 0; j < b.Size(); j += incrementor {
-      transposedBoard = append(transposedBoard, b.Surface()[i + j])
-    }
-  }
-  return transposedBoard
-}
-
 func (b Board) incrementor() int {
   return int(math.Sqrt(float64(b.Size())))
 }
 
 func even(number int) bool{
-  return number%2 == 0
+  return number % 2 == 0
 }
 
 func odd(number int) bool{
