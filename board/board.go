@@ -1,6 +1,9 @@
 package board
 
-import "math"
+import (
+  "math"
+  "strings"
+)
 
 type Board struct {
   size int
@@ -46,19 +49,27 @@ func (b Board) AvailableSpots() []int{
   return availableSpots
 }
 
-func (b Board) WinningMarker() string {
-  return b.checkRows()
+func (b Board) WinningMarker() string{
+  checkBoard := ""
+  checkBoard += b.checkRows()
+  checkBoard += b.checkDiagonals()
+  return strings.Trim(checkBoard, " ")
 }
 
 func (b Board) checkRows() string {
   incrementor := b.incrementor()
-  for i := 0; i < b.Size(); i += incrementor {
+  for i := 0; i < b.Size(); i += incrementor{
     boardSubSet := b.Surface()[i:i+incrementor]
     if identicalElements(boardSubSet) {
       return boardSubSet[0]
     }
   }
   return ""
+}
+
+func (b Board) checkDiagonals() string {
+  b.surface = b.transposeBoard()
+  return b.checkRows()
 }
 
 func (b *Board) setSurface() {
@@ -79,16 +90,27 @@ func (b *Board) setDefaultMarkers() {
 
 func identicalElements(boardSubSection []string) bool{
   elementsAreIdentical := false
-  elementsMap := make(map[string]bool)
+  elementsMap := make(map[string]int)
   for _, element := range boardSubSection {
     if element != "" {
-      elementsMap[element] = true
+      elementsMap[element] = elementsMap[element] + 1
+      if elementsMap[element] == 3 {
+        elementsAreIdentical = true
+      }
     }
   }
-  if len(elementsMap) == 1 {
-    elementsAreIdentical = true
-  }
   return elementsAreIdentical
+}
+
+func (b Board) transposeBoard() []string{
+  transposedBoard := make([]string, 0)
+  incrementor := b.incrementor()
+  for i := 0; i < incrementor; i++ {
+    for j:= 0; j < b.Size(); j += incrementor {
+      transposedBoard = append(transposedBoard, b.Surface()[i + j])
+    }
+  }
+  return transposedBoard
 }
 
 func (b Board) incrementor() int {
