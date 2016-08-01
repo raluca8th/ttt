@@ -52,7 +52,8 @@ func (b Board) AvailableSpots() []int{
 func (b Board) WinningMarker() string{
   checkBoard := ""
   checkBoard += b.checkRows()
-  checkBoard += b.checkDiagonals()
+  checkBoard += b.checkColumns()
+  checkBoard += b.checkLeftDiagonal()
   return strings.Trim(checkBoard, " ")
 }
 
@@ -67,9 +68,21 @@ func (b Board) checkRows() string {
   return ""
 }
 
-func (b Board) checkDiagonals() string {
+func (b Board) checkColumns() string {
   b.surface = b.transposeBoard()
   return b.checkRows()
+}
+
+func (b Board) checkLeftDiagonal() string {
+  leftDiagonal := make([]string, 0)
+  for i := 0; i < b.Size(); i += b.incrementor() + 1 {
+    leftDiagonal = append(leftDiagonal, b.Surface()[i])
+  }
+  if identicalElements(leftDiagonal) {
+    return leftDiagonal[0]
+  } else {
+    return ""
+  }
 }
 
 func (b *Board) setSurface() {
