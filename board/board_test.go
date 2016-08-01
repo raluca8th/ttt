@@ -76,3 +76,23 @@ func TestAvailableSpots(t *testing.T) {
     t.Error("Expected {0, 1, 3, 5, 6, 7}, but it was", availableSpots)
   }
 }
+
+func TestWinningMarkerWinningRow(t *testing.T) {
+  board := NewBoard(Params{})
+  board.FillSpot(6, "X")
+  board.FillSpot(7, "X")
+  board.FillSpot(8, "X")
+  if winningMarker := board.WinningMarker(); winningMarker != "X" {
+    t.Error("Expected Winning Marker to be 'X', but it was", winningMarker)
+  }
+}
+
+func TestWinningMarkerBoardNotSolved(t *testing.T) {
+  board := NewBoard(Params{})
+  board.FillSpot(2, "X")
+  board.FillSpot(3, "X")
+  board.FillSpot(4, "X")
+  if winningMarker := board.WinningMarker(); winningMarker != "" {
+    t.Error("Expected Winning Marker to be '', but it was", winningMarker)
+  }
+}

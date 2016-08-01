@@ -1,5 +1,7 @@
 package board
 
+import "math"
+
 type Board struct {
   size int
   markers [2]string
@@ -44,6 +46,21 @@ func (b Board) AvailableSpots() []int{
   return availableSpots
 }
 
+func (b Board) WinningMarker() string {
+  return b.checkRows()
+}
+
+func (b Board) checkRows() string {
+  incrementor := b.incrementor()
+  for i := 0; i < b.Size(); i += incrementor {
+    boardSubSet := b.Surface()[i:i+incrementor]
+    if identicalElements(boardSubSet) {
+      return boardSubSet[0]
+    }
+  }
+  return ""
+}
+
 func (b *Board) setSurface() {
   b.surface = make([]string, b.Size())
 }
@@ -58,6 +75,24 @@ func (b *Board) setDefaultMarkers() {
   if b.markers == [2]string{} {
     b.markers = [2]string{"X", "Y"}
   }
+}
+
+func identicalElements(boardSubSection []string) bool{
+  elementsAreIdentical := false
+  elementsMap := make(map[string]bool)
+  for _, element := range boardSubSection {
+    if element != "" {
+      elementsMap[element] = true
+    }
+  }
+  if len(elementsMap) == 1 {
+    elementsAreIdentical = true
+  }
+  return elementsAreIdentical
+}
+
+func (b Board) incrementor() int {
+  return int(math.Sqrt(float64(b.Size())))
 }
 
 type Params struct {
