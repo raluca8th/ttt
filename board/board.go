@@ -2,7 +2,6 @@ package board
 
 import (
   "math"
-  "strings"
 )
 
 type Board struct {
@@ -50,11 +49,11 @@ func (b Board) AvailableSpots() []int{
 }
 
 func (b Board) WinningMarker() string{
-  checkBoard := ""
-  checkBoard += b.checkRows()
+  checkBoard := b.checkRows()
   checkBoard += b.checkColumns()
   checkBoard += b.checkLeftDiagonal()
-  return strings.Trim(checkBoard, " ")
+  checkBoard += b.checkRightDiagonal()
+  return checkBoard
 }
 
 func (b Board) checkRows() string {
@@ -78,11 +77,16 @@ func (b Board) checkLeftDiagonal() string {
   for i := 0; i < b.Size(); i += b.incrementor() + 1 {
     leftDiagonal = append(leftDiagonal, b.Surface()[i])
   }
-  if identicalElements(leftDiagonal) {
-    return leftDiagonal[0]
-  } else {
-    return ""
+  return checkRow(leftDiagonal)
+}
+
+func (b Board) checkRightDiagonal() string {
+  rightDiagonal := make([]string, 0)
+  for i := 0; i < b.incrementor(); i++ {
+    index := int(math.Abs(float64(i - ((b.incrementor() * (i + 1)) - 1))))
+    rightDiagonal = append(rightDiagonal, b.Surface()[index])
   }
+  return checkRow(rightDiagonal)
 }
 
 func (b *Board) setSurface() {
@@ -113,6 +117,14 @@ func identicalElements(boardSubSection []string) bool{
     }
   }
   return elementsAreIdentical
+}
+
+func checkRow(row []string) string {
+  marker := ""
+  if identicalElements(row) {
+    marker = row[0]
+  }
+  return marker
 }
 
 func (b Board) transposeBoard() []string{

@@ -107,6 +107,16 @@ func TestWinningMarkerWinningLeftDiagonal(t *testing.T) {
   }
 }
 
+func TestWinningMarkerWinningRightDiagonal(t *testing.T) {
+  board := NewBoard(Params{})
+  board.FillSpot(2, "X")
+  board.FillSpot(4, "X")
+  board.FillSpot(6, "X")
+  if winningMarker := board.WinningMarker(); winningMarker != "X" {
+    t.Error("Expected Winning Marker to be 'X', but it was", winningMarker)
+  }
+}
+
 func TestWinningMarkerBoardNotSolved(t *testing.T) {
   board := NewBoard(Params{})
   board.FillSpot(2, "X")
