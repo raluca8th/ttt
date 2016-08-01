@@ -48,6 +48,22 @@ func (b Board) AvailableSpots() []int{
   return availableSpots
 }
 
+func (b Board) NextMarker() string{
+  if odd(b.Size()) {
+    if even(len(b.AvailableSpots())) {
+      return b.markers[1]
+    } else {
+      return b.markers[0]
+    }
+  } else {
+    if even(len(b.AvailableSpots())) {
+      return b.markers[0]
+    } else {
+      return b.markers[1]
+    }
+  }
+}
+
 func (b Board) WinningMarker() string{
   checkBoard := b.checkRows()
   checkBoard += b.checkColumns()
@@ -148,6 +164,14 @@ func (b Board) transposeBoard() []string{
 
 func (b Board) incrementor() int {
   return int(math.Sqrt(float64(b.Size())))
+}
+
+func even(number int) bool{
+  return number%2 == 0
+}
+
+func odd(number int) bool{
+  return !even(number)
 }
 
 type Params struct {

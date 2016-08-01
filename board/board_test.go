@@ -148,3 +148,25 @@ func TestIsBoardTied(t *testing.T) {
     t.Error("Expected IsBoardSolved to be true, but it was", isBoardSolved)
   }
 }
+
+func TestNextMarker(t *testing.T) {
+  board := NewBoard(Params{})
+  if nextMarker := board.NextMarker(); nextMarker != "X" {
+    t.Error("Expected marker to be X, but it was", nextMarker)
+  }
+  board.FillSpot(1, board.NextMarker())
+  if nextMarker := board.NextMarker(); nextMarker != "Y" {
+    t.Error("Expected marker to be Y, but it was", nextMarker)
+  }
+}
+
+func TestNextMarker4X4Board(t *testing.T) {
+  board := NewBoard(Params{size: 16})
+  if nextMarker := board.NextMarker(); nextMarker != "X" {
+    t.Error("Expected marker to be X, but it was", nextMarker)
+  }
+  board.FillSpot(1, board.NextMarker())
+  if nextMarker := board.NextMarker(); nextMarker != "Y" {
+    t.Error("Expected marker to be Y, but it was", nextMarker)
+  }
+}
