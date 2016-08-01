@@ -85,6 +85,9 @@ func TestWinningMarkerWinningRow(t *testing.T) {
   if winningMarker := board.WinningMarker(); winningMarker != "X" {
     t.Error("Expected Winning Marker to be 'X', but it was", winningMarker)
   }
+  if isBoardSolved := board.IsBoardSolved(); isBoardSolved != true {
+    t.Error("Expected IsBoardSolved to be true, but it was", isBoardSolved)
+  }
 }
 
 func TestWinningMarkerWinningColumn(t *testing.T) {
@@ -127,7 +130,6 @@ func TestWinningMarkerBoardNotSolved(t *testing.T) {
   }
 }
 
-
 func TestIsBoardTied(t *testing.T) {
   board := NewBoard(Params{})
   board.FillSpot(0, "X")
@@ -141,5 +143,8 @@ func TestIsBoardTied(t *testing.T) {
   board.FillSpot(8, "Y")
   if isTiedBoard := board.IsTiedBoard(); isTiedBoard != true {
     t.Error("Expected IsTiedBoard to return true, but it returned", isTiedBoard)
+  }
+  if isBoardSolved := board.IsBoardSolved(); isBoardSolved != true {
+    t.Error("Expected IsBoardSolved to be true, but it was", isBoardSolved)
   }
 }
