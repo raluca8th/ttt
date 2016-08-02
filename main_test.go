@@ -2,6 +2,11 @@ package main
 
 import "testing"
 
+func ExampleWelcome() {
+  main()
+  // Output: Welcome to my TTT
+}
+
 func TestHello(t *testing.T) {
   expected := "Welcome to my TTT"
   returned := welcome()
