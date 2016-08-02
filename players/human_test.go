@@ -21,6 +21,18 @@ func TestMarker(t *testing.T) {
   }
 }
 
+func TestUI(t *testing.T) {
+  stdinReader := new(testSTDINReader)
+  cliReader := cli.CLIInput{Reader: stdinReader}
+  testPrinter := new(testSTDOUTprinter)
+  cliPrinter := cli.CLIOutput{Printer: testPrinter}
+  ui := cli.UI{Input: cliReader, Output: cliPrinter}
+  humanPlayer := HumanPlayer{name: "Anda", marker: "A", ui: ui}
+  if playerUI := humanPlayer.UI(); playerUI != ui {
+    t.Error("Expected marker to be A, but it was", playerUI)
+  }
+}
+
 func TestSelectSpot(t *testing.T) {
   board := board.NewBoard(board.Params{})
   stdinReader := new(testSTDINReader)
@@ -36,12 +48,29 @@ func TestSelectSpot(t *testing.T) {
   }
 }
 
+func TestSelectAvailableSpot(t *testing.T) {
+  board := board.NewBoard(board.Params{})
+  board.FillSpot(3)
+  stdinReader := new(testSTDINReader)
+  stdinReader.buffer.WriteString("3 6")
+  cliReader := cli.CLIInput{Reader: stdinReader}
+  testPrinter := new(testSTDOUTprinter)
+  cliPrinter := cli.CLIOutput{Printer: testPrinter}
+  ui := cli.UI{Input: cliReader, Output: cliPrinter}
+  humanPlayer := HumanPlayer{name: "Anda", marker: "A", ui: ui}
+
+  if spot := humanPlayer.SelectSpot(board); spot != 6 {
+    t.Error("Expected spot to be 6, but it was", spot)
+  }
+}
+
 type testSTDINReader struct {
   buffer bytes.Buffer
 }
 
 func (r *testSTDINReader) Read() string{
-  return r.buffer.String()
+  input, _ := r.buffer.ReadString(' ')
+  return input
 }
 
 type testSTDOUTprinter struct {
