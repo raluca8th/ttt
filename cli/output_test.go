@@ -15,7 +15,7 @@ func (p *testSTDOUTprinter) Print(s string) {
 
 func TestCLIOutput(t *testing.T) {
   testPrinter := new(testSTDOUTprinter)
-  output := CLIOutput{printer: testPrinter}
+  output := CLIOutput{Printer: testPrinter}
   output.Print("Print me please")
   if printedString := testPrinter.buffer.String(); printedString != "Print me please" {
     t.Error("Expected printed string to be 'Print me please', but it was", printedString)

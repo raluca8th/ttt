@@ -13,9 +13,9 @@ func (p *STDOUTprinter) Print(s string){
 }
 
 type CLIOutput struct {
-  printer Printer
+  Printer Printer
 }
 
 func (o *CLIOutput) Print(s string){
-  o.printer.Print(s)
+  o.Printer.Print(s)
 }

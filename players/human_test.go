@@ -1,6 +1,11 @@
 package players
 
-import "testing"
+import (
+  "testing"
+  "ttt/board"
+  "ttt/cli"
+  "bytes"
+)
 
 func TestName(t *testing.T) {
   humanPlayer := HumanPlayer{name: "Anda"}
@@ -16,3 +21,33 @@ func TestMarker(t *testing.T) {
   }
 }
 
+func TestSelectSpot(t *testing.T) {
+  board := board.NewBoard(board.Params{})
+  stdinReader := new(testSTDINReader)
+  stdinReader.buffer.WriteString("5")
+  cliReader := cli.CLIInput{Reader: stdinReader}
+  testPrinter := new(testSTDOUTprinter)
+  cliPrinter := cli.CLIOutput{Printer: testPrinter}
+  ui := cli.UI{Input: cliReader, Output: cliPrinter}
+  humanPlayer := HumanPlayer{name: "Anda", marker: "A", ui: ui}
+
+  if spot := humanPlayer.SelectSpot(board); spot != 5 {
+    t.Error("Expected spot to be 5, but it was", spot)
+  }
+}
+
+type testSTDINReader struct {
+  buffer bytes.Buffer
+}
+
+func (r *testSTDINReader) Read() string{
+  return r.buffer.String()
+}
+
+type testSTDOUTprinter struct {
+  buffer bytes.Buffer
+}
+
+func (p *testSTDOUTprinter) Print(s string) {
+  p.buffer.WriteString(s)
+}

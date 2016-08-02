@@ -15,11 +15,11 @@ func (in *STDINReader) Read() string {
 }
 
 type CLIInput struct {
-  reader Reader
+  Reader Reader
 }
 
 func (cli *CLIInput) Read() string{
-  return cli.reader.Read()
+  return cli.Reader.Read()
 }
 
 
