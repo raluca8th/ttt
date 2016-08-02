@@ -37,7 +37,7 @@ func (b Board) SpotIsAvailable(spot int) bool{
 }
 
 func (b Board) AvailableSpots() []int{
-  availableSpots := make([]int, 0, b.Size())
+  var availableSpots []int
   for i, spot := range b.Surface() {
     if spot == "" {
       availableSpots = append(availableSpots, i)
@@ -95,7 +95,7 @@ func (b Board) checkColumns() string {
 }
 
 func (b Board) checkLeftDiagonal() string {
-  leftDiagonal := make([]string, 0)
+  var leftDiagonal []string
   for i := 0; i < b.Size(); i += b.incrementor() + 1 {
     leftDiagonal = append(leftDiagonal, b.Surface()[i])
   }
@@ -103,7 +103,7 @@ func (b Board) checkLeftDiagonal() string {
 }
 
 func (b Board) checkRightDiagonal() string {
-  rightDiagonal := make([]string, 0)
+  var rightDiagonal []string
   for i := 0; i < b.incrementor(); i++ {
     index := int(math.Abs(float64(i - ((b.incrementor() * (i + 1)) - 1))))
     rightDiagonal = append(rightDiagonal, b.Surface()[index])
@@ -128,7 +128,7 @@ func (b *Board) setDefaultMarkers() {
 }
 
 func (b Board) transposeBoard() []string{
-  transposedBoard := make([]string, 0)
+  var transposedBoard []string
   incrementor := b.incrementor()
   for i := 0; i < incrementor; i++ {
     for j:= 0; j < b.Size(); j += incrementor {
@@ -148,7 +148,7 @@ func checkRow(row []string) string {
 
 func identicalElements(boardSubSection []string) bool{
   elementsAreIdentical := false
-  elementsMap := make(map[string]int)
+  elementsMap := map[string]int{}
   for _, element := range boardSubSection {
     if element != "" {
       elementsMap[element] = elementsMap[element] + 1

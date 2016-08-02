@@ -1,7 +1,9 @@
 package board
 
-import "testing"
-import "reflect"
+import (
+  "testing"
+  "reflect"
+)
 
 func TestDefaultSize(t *testing.T) {
   board := NewBoard(Params{})
