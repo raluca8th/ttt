@@ -1,15 +1,23 @@
 package game
 
 import "github.com/raluca8th/ttt/board"
+import "fmt"
 
 type Player interface{
   Name() string
   Marker() string
+  SelectSpot(board *board.Board) int
 }
 
 type Game struct{
   players []Player
   board *board.Board
+}
+
+func NewGame(players []Player, size int) *Game{
+  markers := getMarkersFromPlayers(players)
+  board := board.NewBoard(board.Params{Size: size, Markers: markers})
+  return &Game{players: players, board: board}
 }
 
 func (g Game) Players() []Player{
@@ -18,4 +26,47 @@ func (g Game) Players() []Player{
 
 func (g Game) Board() *board.Board{
   return g.board
+}
+
+func (g Game) TakeTurn(player Player){
+  spot := player.SelectSpot(g.Board())
+  if g.Board().SpotIsAvailable(spot) {
+    g.board.FillSpot(spot)
+  }
+}
+
+func (g Game) PlayGame(){
+  for true {
+    for _, player := range g.Players() {
+      g.TakeTurn(player)
+      if g.gameOver() {
+        return
+      }
+    }
+  }
+}
+
+func (g Game) Winner() Player{
+  var winner Player
+  winnerMarker := g.Board().WinningMarker()
+  for _, player := range g.Players() {
+    if player.Marker() == winnerMarker {
+      return player
+    }
+  }
+  if winner == nil {
+    fmt.Println("kjf")
+  }
+  return winner
+}
+
+func (g Game) gameOver() bool{
+  return g.Board().IsBoardSolved()
+}
+
+func getMarkersFromPlayers(players []Player) [2]string{
+  var markers [2]string
+  markers[0] = players[0].Marker()
+  markers[1] = players[1].Marker()
+  return markers
 }
