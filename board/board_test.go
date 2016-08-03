@@ -143,7 +143,7 @@ func TestNextMarker(t *testing.T) {
 }
 
 func TestNextMarker4X4Board(t *testing.T) {
-  board := NewBoard(Params{size: 16})
+  board := NewBoard(Params{Size: 16})
   if nextMarker := board.NextMarker(); nextMarker != "X" {
     t.Error("Expected marker to be X, but it was", nextMarker)
   }
