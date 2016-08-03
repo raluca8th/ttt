@@ -6,6 +6,7 @@ import (
   "strings"
   "strconv"
   "bytes"
+  "reflect"
 )
 
 func TestPlayers(t *testing.T){
@@ -43,8 +44,8 @@ func TestNewGameGeneratesBoard(t *testing.T){
 func TestTakeTurnCurrentPlayer(t *testing.T){
   var mockInput bytes.Buffer
   mockInput.WriteString("4")
-  player1 := testPlayer{name: "Anda", marker: "A", mockInput: mockInput}
-  player2 := testPlayer{name: "Eli", marker: "E", mockInput: mockInput}
+  player1 := testPlayer{name: "Anda", marker: "A", mockInput: &mockInput}
+  player2 := testPlayer{name: "Eli", marker: "E", mockInput: &mockInput}
   players := []Player{player1, player2}
   g := NewGame(players, 9)
   g.TakeTurn(player1)
@@ -54,9 +55,26 @@ func TestTakeTurnCurrentPlayer(t *testing.T){
   }
 }
 
+func TestPlayGameUntilThereIsATie(t *testing.T){
+  var mockInput bytes.Buffer
+  mockInput.WriteString("0 1 2 5 3 6 4 8 7")
+  player1 := testPlayer{name: "Anda", marker: "X", mockInput: &mockInput}
+  player2 := testPlayer{name: "Eli", marker: "Y", mockInput: &mockInput}
+  players := []Player{player1, player2}
+  g := NewGame(players, 9)
+  expectedBoardState := []string{"X", "Y", "X",
+                                 "X", "X", "Y",
+                                 "Y", "X", "Y"}
+  g.PlayGame()
+
+  if boardSurface := g.Board().Surface(); reflect.DeepEqual(boardSurface, expectedBoardState) != true{
+    t.Error("Expected board to be tied, but it was", boardSurface)
+  }
+}
+
 type testPlayer struct{
   name, marker string
-  mockInput bytes.Buffer
+  mockInput *bytes.Buffer
 }
 
 func (p testPlayer) Name() string{

@@ -29,7 +29,23 @@ func (g Game) Board() *board.Board{
 
 func (g Game) TakeTurn(player Player){
   spot := player.SelectSpot(g.Board())
-  g.board.FillSpot(spot)
+  if g.Board().SpotIsAvailable(spot) {
+    g.board.FillSpot(spot)
+  }
+}
+
+func (g Game) PlayGame(){
+  gameOngoing := true
+  for gameOngoing {
+    for _, player := range g.Players() {
+      g.TakeTurn(player)
+    }
+    gameOngoing = !g.gameOver()
+  }
+}
+
+func (g Game) gameOver() bool{
+  return g.Board().IsTiedBoard()
 }
 
 func getMarkersFromPlayers(players []Player) [2]string{
