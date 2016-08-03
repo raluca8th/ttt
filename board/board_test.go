@@ -14,7 +14,7 @@ func TestDefaultSize(t *testing.T) {
 }
 
 func TestSize(t *testing.T) {
-  board := NewBoard(Params{size: 16})
+  board := NewBoard(Params{Size: 16})
   boardSize := board.Size()
   if boardSize != 16 {
     t.Error("Expected board size to be 16, but it was", boardSize)
@@ -22,7 +22,7 @@ func TestSize(t *testing.T) {
 }
 
 func TestMarkers(t *testing.T) {
-  board := NewBoard(Params{markers: [2]string{"A", "B"}})
+  board := NewBoard(Params{Markers: [2]string{"A", "B"}})
   boardMarkers := board.Markers()
   if boardMarkers != [2]string{"A", "B"} {
     t.Error("Expected markers to be 'A' and 'B', but they were", boardMarkers)
