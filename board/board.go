@@ -9,7 +9,7 @@ type Board struct {
 }
 
 func NewBoard(params Params) *Board {
-  board := &Board{size: params.size, markers: params.markers}
+  board := &Board{size: params.Size, markers: params.Markers}
   board.setDefaultSize()
   board.setDefaultMarkers()
   board.setSurface()
@@ -173,6 +173,6 @@ func odd(number int) bool{
 }
 
 type Params struct {
-  size int
-  markers [2]string
+  Size int
+  Markers [2]string
 }
