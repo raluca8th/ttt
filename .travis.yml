@@ -1,5 +1,5 @@
 language: go
-notificaitons:
+notifications:
   email:
     recipients: your.email@host.com
     on_success: change

@@ -16,8 +16,8 @@ func (r *testSTDINReader) Read() string{
 func TestCLIInput(t *testing.T) {
   reader := new(testSTDINReader)
   reader.buffer.WriteString("A")
-  cliReader := CLIInput{reader: reader}
-  if input := cliReader.Read(); input != "A" {
+
+  if input := reader.Read(); input != "A" {
     t.Error("Expected input to be 'A', but it was", input)
   }
 }
