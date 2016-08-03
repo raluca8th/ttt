@@ -35,17 +35,18 @@ func (g Game) TakeTurn(player Player){
 }
 
 func (g Game) PlayGame(){
-  gameOngoing := true
-  for gameOngoing {
+  for true {
     for _, player := range g.Players() {
       g.TakeTurn(player)
+      if g.gameOver() {
+        return
+      }
     }
-    gameOngoing = !g.gameOver()
   }
 }
 
 func (g Game) gameOver() bool{
-  return g.Board().IsTiedBoard()
+  return g.Board().IsBoardSolved()
 }
 
 func getMarkersFromPlayers(players []Player) [2]string{

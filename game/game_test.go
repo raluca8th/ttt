@@ -72,6 +72,23 @@ func TestPlayGameUntilThereIsATie(t *testing.T){
   }
 }
 
+func TestPlayGameUntilGameIsWon(t *testing.T){
+  var mockInput bytes.Buffer
+  mockInput.WriteString("0 1 4 5 8 2 3 6 7")
+  player1 := testPlayer{name: "Anda", marker: "X", mockInput: &mockInput}
+  player2 := testPlayer{name: "Eli", marker: "Y", mockInput: &mockInput}
+  players := []Player{player1, player2}
+  g := NewGame(players, 9)
+  expectedBoardState := []string{"X", "Y", "",
+                                 "",  "X", "Y",
+                                 "",   "", "X"}
+  g.PlayGame()
+
+  if boardSurface := g.Board().Surface(); reflect.DeepEqual(boardSurface, expectedBoardState) != true{
+    t.Error("Expected board to be tied, but it was", boardSurface)
+  }
+}
+
 type testPlayer struct{
   name, marker string
   mockInput *bytes.Buffer
