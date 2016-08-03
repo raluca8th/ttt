@@ -1,6 +1,7 @@
 package game
 
 import "github.com/raluca8th/ttt/board"
+import "fmt"
 
 type Player interface{
   Name() string
@@ -43,6 +44,20 @@ func (g Game) PlayGame(){
       }
     }
   }
+}
+
+func (g Game) Winner() Player{
+  var winner Player
+  winnerMarker := g.Board().WinningMarker()
+  for _, player := range g.Players() {
+    if player.Marker() == winnerMarker {
+      return player
+    }
+  }
+  if winner == nil {
+    fmt.Println("kjf")
+  }
+  return winner
 }
 
 func (g Game) gameOver() bool{

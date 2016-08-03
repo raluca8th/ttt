@@ -89,6 +89,19 @@ func TestPlayGameUntilGameIsWon(t *testing.T){
   }
 }
 
+func TestGameWinner(t *testing.T){
+  var mockInput bytes.Buffer
+  mockInput.WriteString("0 3 1 4 2")
+  player1 := testPlayer{name: "Anda", marker: "X", mockInput: &mockInput}
+  player2 := testPlayer{name: "Eli", marker: "Y", mockInput: &mockInput}
+  players := []Player{player1, player2}
+  g := NewGame(players, 9)
+  g.PlayGame()
+
+  if winnerName := g.Winner().Name(); winnerName != "Anda"{
+    t.Error("Expected winner name to be Anda, but it was", winnerName)
+  }
+}
 type testPlayer struct{
   name, marker string
   mockInput *bytes.Buffer
