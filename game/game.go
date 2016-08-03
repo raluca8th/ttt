@@ -5,6 +5,7 @@ import "github.com/raluca8th/ttt/board"
 type Player interface{
   Name() string
   Marker() string
+  SelectSpot(board *board.Board) int
 }
 
 type Game struct{
@@ -24,6 +25,11 @@ func (g Game) Players() []Player{
 
 func (g Game) Board() *board.Board{
   return g.board
+}
+
+func (g Game) TakeTurn(player Player){
+  spot := player.SelectSpot(g.Board())
+  g.board.FillSpot(spot)
 }
 
 func getMarkersFromPlayers(players []Player) [2]string{

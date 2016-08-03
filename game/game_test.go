@@ -1,7 +1,12 @@
 package game
 
-import "testing"
-import "github.com/raluca8th/ttt/board"
+import (
+  "testing"
+  "github.com/raluca8th/ttt/board"
+  "strings"
+  "strconv"
+  "bytes"
+)
 
 func TestPlayers(t *testing.T){
   player1 := testPlayer{name: "Anda", marker: "A"}
@@ -35,8 +40,23 @@ func TestNewGameGeneratesBoard(t *testing.T){
   }
 }
 
+func TestTakeTurnCurrentPlayer(t *testing.T){
+  var mockInput bytes.Buffer
+  mockInput.WriteString("4")
+  player1 := testPlayer{name: "Anda", marker: "A", mockInput: mockInput}
+  player2 := testPlayer{name: "Eli", marker: "E", mockInput: mockInput}
+  players := []Player{player1, player2}
+  g := NewGame(players, 9)
+  g.TakeTurn(player1)
+
+  if spotIsAvailable := g.Board().SpotIsAvailable(4); spotIsAvailable != false{
+    t.Error("Expected spot available to return false, but it returned", spotIsAvailable)
+  }
+}
+
 type testPlayer struct{
   name, marker string
+  mockInput bytes.Buffer
 }
 
 func (p testPlayer) Name() string{
@@ -45,4 +65,10 @@ func (p testPlayer) Name() string{
 
 func (p testPlayer) Marker() string{
   return p.marker
+}
+
+func (p testPlayer) SelectSpot(board *board.Board) int{
+  input, _ := p.mockInput.ReadString(' ')
+  spot, _ := strconv.Atoi(strings.TrimSpace(input))
+  return spot
 }
