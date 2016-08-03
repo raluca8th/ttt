@@ -12,10 +12,23 @@ type Game struct{
   board *board.Board
 }
 
+func NewGame(players []Player, size int) *Game{
+  markers := getMarkersFromPlayers(players)
+  board := board.NewBoard(board.Params{Size: size, Markers: markers})
+  return &Game{players: players, board: board}
+}
+
 func (g Game) Players() []Player{
   return g.players
 }
 
 func (g Game) Board() *board.Board{
   return g.board
+}
+
+func getMarkersFromPlayers(players []Player) [2]string{
+  var markers [2]string
+  markers[0] = players[0].Marker()
+  markers[1] = players[1].Marker()
+  return markers
 }

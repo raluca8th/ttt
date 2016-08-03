@@ -24,6 +24,17 @@ func TestBoard(t *testing.T){
   }
 }
 
+func TestNewGameGeneratesBoard(t *testing.T){
+  player1 := testPlayer{name: "Anda", marker: "A"}
+  player2 := testPlayer{name: "Eli", marker: "E"}
+  players := []Player{player1, player2}
+  g := NewGame(players, 9)
+
+  if boardMarkers := g.Board().Markers(); boardMarkers != [2]string{"A", "E"}{
+    t.Error("Expected markers to be 'A' and 'E', but they were", boardMarkers)
+  }
+}
+
 type testPlayer struct{
   name, marker string
 }
