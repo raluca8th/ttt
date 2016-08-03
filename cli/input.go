@@ -13,13 +13,3 @@ func (in *STDINReader) Read() string {
   fmt.Scanf("%s", &input)
   return input
 }
-
-type CLIInput struct {
-  Reader Reader
-}
-
-func (cli *CLIInput) Read() string{
-  return cli.Reader.Read()
-}
-
-
