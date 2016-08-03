@@ -2,9 +2,9 @@ package players
 
 import (
   "testing"
+  "bytes"
   "ttt/board"
   "ttt/cli"
-  "bytes"
 )
 
 func TestName(t *testing.T) {
