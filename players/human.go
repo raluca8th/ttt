@@ -1,15 +1,19 @@
 package players
 
 import (
-  "ttt/cli"
-  "ttt/board"
-  "strconv"
   "strings"
+  "strconv"
 )
 
 type HumanPlayer struct {
   name, marker string
-  ui cli.UI
+  ui interface{
+    Read() string
+  }
+}
+
+type GameBoard interface {
+  AvailableSpots() []int
 }
 
 func (h HumanPlayer) Name() string{
@@ -20,15 +24,11 @@ func (h HumanPlayer) Marker() string{
   return h.marker
 }
 
-func (h HumanPlayer) UI() cli.UI{
-  return h.ui
-}
-
-func (h HumanPlayer) SelectSpot(board *board.Board) int {
+func (h HumanPlayer) SelectSpot(board GameBoard) int {
   spot := -1
   spotIsUnavailable := true
   for spotIsUnavailable{
-    spotString := string(h.ui.Input.Read())
+    spotString := h.ui.Read()
     spot, _ := strconv.Atoi(strings.TrimSpace(spotString))
     if contains(board.AvailableSpots(), spot){
       return spot
