@@ -9,15 +9,16 @@ type setupUI interface{
 
 type Setup struct{
   Ui setupUI
-  players []players.HumanPlayer
 }
 
 func (s *Setup) Welcome(){
   s.print(welcome)
 }
 
-func (s *Setup) Players() []players.HumanPlayer{
-  return s.players
+func (s *Setup) GeneratePlayers() []*players.HumanPlayer{
+  var playerArray []*players.HumanPlayer
+  playerArray = append(playerArray, s.createPlayer(), s.createPlayer())
+  return playerArray
 }
 
 func (s *Setup) createPlayer() *players.HumanPlayer{

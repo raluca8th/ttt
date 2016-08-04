@@ -97,6 +97,31 @@ func TestCreatePlayer(t *testing.T){
   }
 }
 
+func TestGeneratePlayers(t *testing.T){
+  testUI := TestUI{Input: new(testSTDIN), Output: new(testSTDOUT)}
+  testUI.Populate("Anda A Eli E")
+  setup := Setup{Ui: testUI}
+  players := setup.GeneratePlayers()
+  player1 := players[0]
+  player2 := players[1]
+
+  if player1Name := player1.Name(); player1Name != "Anda " {
+    t.Error("Expected player name to be Anda, but it was", player1Name)
+  }
+
+  if player1Marker := player1.Marker(); player1Marker != "A " {
+    t.Error("Expected marker to be 'A', but got", player1Marker)
+  }
+
+  if player2Name := player2.Name(); player2Name != "Eli " {
+    t.Error("Expected player name to be Eli, but it was", player2Name)
+  }
+
+  if player2Marker := player2.Marker(); player2Marker != "E" {
+    t.Error("Expected marker to be 'E', but got", player2Marker)
+  }
+}
+
 type testSTDIN struct {
   buffer bytes.Buffer
 }
