@@ -19,6 +19,12 @@ func (s *Setup) GetPlayerName() string{
   return input
 }
 
+func (s *Setup) GetPlayerMarker() string{
+  s.print("Please enter player marker")
+  input := s.read()
+  return input
+}
+
 func (s *Setup) print(st string){
   s.Ui.Print(st)
 }

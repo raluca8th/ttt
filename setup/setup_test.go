@@ -27,6 +27,17 @@ func TestNameSelection(t *testing.T){
   }
 }
 
+func TestMarkerSelection(t *testing.T){
+  testUI := TestUI{Input: new(testSTDIN), Output: new(testSTDOUT)}
+  testUI.Populate("A")
+  setUp := Setup{Ui: testUI}
+  expectedMessage := "A"
+
+  if playerMarker := setUp.GetPlayerMarker(); playerMarker != expectedMessage {
+    t.Error("Expected 'please enter username', but got", playerMarker)
+  }
+}
+
 type testSTDIN struct {
   buffer bytes.Buffer
 }
