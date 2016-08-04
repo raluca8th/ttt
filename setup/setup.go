@@ -9,6 +9,7 @@ type setupUI interface{
 
 type Setup struct{
   Ui setupUI
+  playersArray []*players.HumanPlayer
 }
 
 func (s *Setup) Welcome(){
@@ -16,9 +17,9 @@ func (s *Setup) Welcome(){
 }
 
 func (s *Setup) GeneratePlayers() []*players.HumanPlayer{
-  var playerArray []*players.HumanPlayer
-  playerArray = append(playerArray, s.createPlayer(), s.createPlayer())
-  return playerArray
+  s.playersArray = append(s.playersArray, s.createPlayer())
+  s.playersArray = append(s.playersArray, s.createPlayer())
+  return s.playersArray
 }
 
 func (s *Setup) createPlayer() *players.HumanPlayer{
@@ -28,11 +29,29 @@ func (s *Setup) createPlayer() *players.HumanPlayer{
 }
 
 func (s *Setup) GetPlayerName() string{
-  return s.validateInput(playerName)
+  var name string
+  for true {
+    name := s.validateInput(playerName)
+    playersArray := s.playersArray
+    if len(playersArray) == 1  && playersArray[0].Name() == name{
+      s.print(nameNotAvailable) } else {
+      return name
+    }
+  }
+  return name
 }
 
 func (s *Setup) GetPlayerMarker() string{
-  return s.validateInput(playerMarker)
+  var marker  string
+  for true {
+    marker := s.validateInput(playerMarker)
+    playersArray := s.playersArray
+    if len(playersArray) == 1  && playersArray[0].Marker() == marker{
+      s.print(markerNotAvailable) } else {
+      return marker
+    }
+  }
+  return marker
 }
 
 func (s *Setup) GetGameSize() string{
@@ -83,6 +102,8 @@ const (
   emptySelection = ""
   welcome = "Welcome to GO TicTacToe"
   playerName = "Please enter player name"
+  nameNotAvailable = "Name not available. Please enter another name"
+  markerNotAvailable = "Marker not available. Please enter another name"
   playerMarker = "Please enter player marker"
   invalidSelection = "Invalid Selection"
   gameSizeSelection = "Please select game type\n\t 1. Select 1 for 3X3 board \n\t 2. Select 2 for 4X4 board"

@@ -99,7 +99,7 @@ func TestCreatePlayer(t *testing.T){
 
 func TestGeneratePlayers(t *testing.T){
   testUI := TestUI{Input: new(testSTDIN), Output: new(testSTDOUT)}
-  testUI.Populate("Anda A Eli E")
+  testUI.Populate("Anda A Anda Eli A E")
   setup := Setup{Ui: testUI}
   players := setup.GeneratePlayers()
   player1 := players[0]
