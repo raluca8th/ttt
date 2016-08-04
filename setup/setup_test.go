@@ -27,9 +27,31 @@ func TestNameSelection(t *testing.T){
   }
 }
 
+func TestValidNameSelection(t *testing.T){
+  testUI := TestUI{Input: new(testSTDIN), Output: new(testSTDOUT)}
+  testUI.Populate("   Anda")
+  setUp := Setup{Ui: testUI}
+  expectedMessage := "Anda"
+
+  if playerName := setUp.GetPlayerName(); playerName != expectedMessage {
+    t.Error("Expected player name to be 'Anda', but got", playerName)
+  }
+}
+
 func TestMarkerSelection(t *testing.T){
   testUI := TestUI{Input: new(testSTDIN), Output: new(testSTDOUT)}
   testUI.Populate("A")
+  setUp := Setup{Ui: testUI}
+  expectedMessage := "A"
+
+  if playerMarker := setUp.GetPlayerMarker(); playerMarker != expectedMessage {
+    t.Error("Expected marker to be 'A', but got", playerMarker)
+  }
+}
+
+func TestValidMarkerSelection(t *testing.T){
+  testUI := TestUI{Input: new(testSTDIN), Output: new(testSTDOUT)}
+  testUI.Populate("    A")
   setUp := Setup{Ui: testUI}
   expectedMessage := "A"
 

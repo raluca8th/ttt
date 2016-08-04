@@ -14,13 +14,11 @@ func (s *Setup) Welcome(){
 }
 
 func (s *Setup) GetPlayerName() string{
-  s.print(playerName)
-  return s.getUserInput()
+  return s.validateInput(playerName)
 }
 
 func (s *Setup) GetPlayerMarker() string{
-  s.print(playerMarker)
-  return s.getUserInput()
+  return s.validateInput(playerMarker)
 }
 
 func (s *Setup) GetGameSize() string{
@@ -37,6 +35,20 @@ func (s *Setup) GetGameSize() string{
   return size
 }
 
+func (s *Setup) validateInput(message string) string{
+  selection := emptySelection
+  s.print(message)
+  for true{
+    selection := s.getUserInput()
+    if s.validInput(selection){
+      return selection
+    }
+    s.print(invalidSelection)
+    s.print(message)
+  }
+  return selection
+}
+
 func (s *Setup) print(st string){
   s.Ui.Print(st)
 }
@@ -47,6 +59,10 @@ func (s *Setup) getUserInput() string{
 
 func validGameSize(size string) bool{
   return size == "1" || size == "2"
+}
+
+func (s *Setup) validInput(input string) bool{
+  return input != " "
 }
 
 const (
