@@ -23,7 +23,7 @@ func TestNameSelection(t *testing.T){
   expectedMessage := "Anda"
 
   if playerName := setUp.GetPlayerName(); playerName != expectedMessage {
-    t.Error("Expected 'please enter username', but got", playerName)
+    t.Error("Expected player name to be 'Anda', but got", playerName)
   }
 }
 
@@ -34,7 +34,29 @@ func TestMarkerSelection(t *testing.T){
   expectedMessage := "A"
 
   if playerMarker := setUp.GetPlayerMarker(); playerMarker != expectedMessage {
-    t.Error("Expected 'please enter username', but got", playerMarker)
+    t.Error("Expected marker to be 'A', but got", playerMarker)
+  }
+}
+
+func TestGameSize(t *testing.T){
+  testUI := TestUI{Input: new(testSTDIN), Output: new(testSTDOUT)}
+  testUI.Populate("1")
+  setUp := Setup{Ui: testUI}
+  expectedMessage := "1"
+
+  if gameSize := setUp.GetGameSize(); gameSize != expectedMessage {
+    t.Error("Expected 1, but got", gameSize)
+  }
+}
+
+func TestValidGameSize(t *testing.T){
+  testUI := TestUI{Input: new(testSTDIN), Output: new(testSTDOUT)}
+  testUI.Populate("5 0 g 2")
+  setUp := Setup{Ui: testUI}
+  expectedMessage := "2"
+
+  if gameSize := setUp.GetGameSize(); gameSize != expectedMessage {
+    t.Error("Expected 2, but got", gameSize)
   }
 }
 
