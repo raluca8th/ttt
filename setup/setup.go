@@ -1,6 +1,9 @@
 package setup
 
-import "github.com/raluca8th/ttt/players"
+import (
+  "github.com/raluca8th/ttt/players"
+  "strings"
+)
 
 type setupUI interface{
   Read() string
@@ -95,7 +98,7 @@ func validGameSize(size string) bool{
 }
 
 func (s *Setup) validInput(input string) bool{
-  return input != " "
+  return strings.TrimSpace(input) != ""
 }
 
 const (
