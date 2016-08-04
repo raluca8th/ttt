@@ -12,6 +12,10 @@ type HumanPlayer struct {
   }
 }
 
+func NewHumanPlayer(name, marker string) *HumanPlayer{
+  return &HumanPlayer{name: name, marker: marker}
+}
+
 type GameBoard interface {
   AvailableSpots() []int
 }

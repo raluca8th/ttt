@@ -19,6 +19,18 @@ func TestMarker(t *testing.T) {
   }
 }
 
+func TestNewHumanPlayer(t * testing.T){
+  humanPlayer := NewHumanPlayer("Anda", "A")
+
+  if name := humanPlayer.Name(); name != "Anda" {
+    t.Error("Expected name to be Anda, but it was", name)
+  }
+
+  if marker := humanPlayer.Marker(); marker != "A" {
+    t.Error("Expected marker to be A, but it was", marker)
+  }
+}
+
 func TestSelectSpot(t *testing.T) {
   stdin := testSTDIN{}
   stdin.buffer.WriteString("5")
