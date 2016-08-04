@@ -82,6 +82,21 @@ func TestValidGameSize(t *testing.T){
   }
 }
 
+func TestCreatePlayer(t *testing.T){
+  testUI := TestUI{Input: new(testSTDIN), Output: new(testSTDOUT)}
+  testUI.Populate("Anda A")
+  setup := Setup{Ui: testUI}
+  player := setup.createPlayer()
+
+  if playerName := player.Name(); playerName != "Anda " {
+    t.Error("Expected player name to be Anda, but it was", playerName)
+  }
+
+  if playerMarker := player.Marker(); playerMarker != "A" {
+    t.Error("Expected marker to be 'A', but got", playerMarker)
+  }
+}
+
 type testSTDIN struct {
   buffer bytes.Buffer
 }
@@ -119,4 +134,17 @@ func (ui *TestUI) CheckOutput() string{
 
 func (ui *TestUI) Populate(s string){
    ui.Input.buffer.WriteString(s)
+}
+
+type testPlayer struct{
+  name, marker string
+  mockInput *bytes.Buffer
+}
+
+func (p testPlayer) Name() string{
+  return p.name
+}
+
+func (p testPlayer) Marker() string{
+  return p.marker
 }

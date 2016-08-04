@@ -1,5 +1,7 @@
 package setup
 
+import "github.com/raluca8th/ttt/players"
+
 type setupUI interface{
   Read() string
   Print(s string)
@@ -7,10 +9,21 @@ type setupUI interface{
 
 type Setup struct{
   Ui setupUI
+  players []players.HumanPlayer
 }
 
 func (s *Setup) Welcome(){
   s.print(welcome)
+}
+
+func (s *Setup) Players() []players.HumanPlayer{
+  return s.players
+}
+
+func (s *Setup) createPlayer() *players.HumanPlayer{
+  name := s.GetPlayerName()
+  marker := s.GetPlayerMarker()
+  return players.NewHumanPlayer(name, marker)
 }
 
 func (s *Setup) GetPlayerName() string{
