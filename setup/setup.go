@@ -1,34 +1,33 @@
 package setup
 
 import (
-  "github.com/raluca8th/ttt/players"
+  "ttt/game"
   "strings"
+  "ttt/ui"
+  "ttt/cli"
+  "ttt/players"
 )
 
-type setupUI interface{
-  Read() string
-  Print(s string)
-}
-
 type Setup struct{
-  Ui setupUI
-  playersArray []*players.HumanPlayer
+  Ui ui.UI
+  playersArray []game.Player
 }
 
 func (s *Setup) Welcome(){
   s.print(welcome)
 }
 
-func (s *Setup) GeneratePlayers() []*players.HumanPlayer{
+func (s *Setup) GeneratePlayers() []game.Player{
   s.playersArray = append(s.playersArray, s.createPlayer())
   s.playersArray = append(s.playersArray, s.createPlayer())
   return s.playersArray
 }
 
-func (s *Setup) createPlayer() *players.HumanPlayer{
+func (s *Setup) createPlayer() game.Player{
   name := s.GetPlayerName()
   marker := s.GetPlayerMarker()
-  return players.NewHumanPlayer(name, marker)
+  ui := cli.CLI{}
+  return *players.NewHumanPlayer(name, marker, ui)
 }
 
 func (s *Setup) GetPlayerName() string{
@@ -103,12 +102,12 @@ func (s *Setup) validInput(input string) bool{
 
 const (
   emptySelection = ""
-  welcome = "Welcome to GO TicTacToe"
-  playerName = "Please enter player name"
-  nameNotAvailable = "Name not available. Please enter another name"
-  markerNotAvailable = "Marker not available. Please enter another name"
-  playerMarker = "Please enter player marker"
-  invalidSelection = "Invalid Selection"
-  gameSizeSelection = "Please select game type\n\t 1. Select 1 for 3X3 board \n\t 2. Select 2 for 4X4 board"
+  welcome = "Welcome to GO TicTacToe\n"
+  playerName = "Please enter player name\n"
+  nameNotAvailable = "Name not available. Please enter another name\n"
+  markerNotAvailable = "Marker not available. Please enter another name\n"
+  playerMarker = "Please enter player marker\n"
+  invalidSelection = "Invalid Selection\n"
+  gameSizeSelection = "Please select game type\n\t 1. Select 1 for 3X3 board \n\t 2. Select 2 for 4X4 board\n"
 )
 

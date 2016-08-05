@@ -8,7 +8,7 @@ import (
 func TestWelcome(t *testing.T){
   testUI := TestUI{Input: new(testSTDIN), Output: new(testSTDOUT)}
   setUp := Setup{Ui: testUI}
-  expectedMessage := "Welcome to GO TicTacToe"
+  expectedMessage := "Welcome to GO TicTacToe\n"
   setUp.Welcome()
 
   if welcomeMessage := testUI.CheckOutput(); welcomeMessage != expectedMessage {
@@ -148,8 +148,10 @@ func (ui TestUI) Read() string{
   return ui.Input.read()
 }
 
-func (ui TestUI) Print(s string){
-  ui.Output.print(s)
+func (ui TestUI) Print(strings ...string){
+  for _, s := range strings {
+    ui.Output.print(s)
+  }
 }
 
 func (ui *TestUI) CheckOutput() string{
