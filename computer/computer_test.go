@@ -5,8 +5,9 @@ import (
   "bytes"
   "ttt/tttBoard"
   "ttt/board"
+//  "fmt"
 )
-
+/*
 func TestName(t *testing.T) {
   computerPlayer := ComputerPlayer{name: "Walle"}
   if name := computerPlayer.Name(); name != "Walle" {
@@ -47,22 +48,19 @@ func TestSelectFirstSpot(t *testing.T) {
     t.Error("Expected spot to be 4, but it was", spot)
   }
 }
-
-/*
-func TestSelectAvailableSpot(t *testing.T) {
+*/
+func TestSelectWinningSpot(t *testing.T) {
   stdin := new(testSTDIN)
-  stdin.buffer.WriteString("3 6")
   stdout := new(testSTDOUT)
   ui := testUI{input: stdin, output: stdout}
   computerPlayer := ComputerPlayer{name: "Wallee", marker: "W", ui: &ui}
-  board := new(testBoard)
-  board.availableSpots = []int{6}
+  board := tttboard.NewBoard(tttboard.Params{Size: 9, Markers: [2]string{"W", "I"}})
+  fillSpots(board, []int{0, 3, 4, 5})
 
-  if spot := computerPlayer.SelectSpot(board); spot != 6 {
-    t.Error("Expected spot to be 6, but it was", spot)
+  if spot := computerPlayer.SelectSpot(board); spot != 8 {
+    t.Error("Expected spot to be 8, but it was", spot)
   }
 }
-*/
 
 type testSTDIN struct {
   buffer bytes.Buffer

@@ -3,6 +3,7 @@ package players
 import (
   "ttt/ui"
   "ttt/board"
+  "fmt"
 )
 
 type ComputerPlayer struct {
@@ -26,6 +27,19 @@ func (h ComputerPlayer) SelectSpot(board board.Board) int {
   if len(board.AvailableSpots()) == 9 {
     return 4
   } else {
-    return 0
+    for _, spot := range availableSpots(board){
+      board.FillSpot(spot)
+      fmt.Println(board)
+      fmt.Println(spot)
+      if board.IsBoardSolved(){
+        return spot
+      }
+      board.ResetSpot(spot)
+    }
   }
+  return 0
+}
+
+func availableSpots(board board.Board) []int{
+  return board.AvailableSpots()
 }
