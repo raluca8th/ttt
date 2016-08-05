@@ -20,7 +20,10 @@ func TestMarker(t *testing.T) {
 }
 
 func TestNewHumanPlayer(t * testing.T){
-  humanPlayer := NewHumanPlayer("Anda", "A")
+  stdin := new(testSTDIN)
+  stdout := new(testSTDOUT)
+  ui := testUI{input: stdin, output: stdout}
+  humanPlayer := NewHumanPlayer("Anda", "A", ui)
 
   if name := humanPlayer.Name(); name != "Anda" {
     t.Error("Expected name to be Anda, but it was", name)
@@ -32,9 +35,9 @@ func TestNewHumanPlayer(t * testing.T){
 }
 
 func TestSelectSpot(t *testing.T) {
-  stdin := testSTDIN{}
+  stdin := new(testSTDIN)
   stdin.buffer.WriteString("5")
-  stdout := testSTDOUT{}
+  stdout := new(testSTDOUT)
   ui := testUI{input: stdin, output: stdout}
   humanPlayer := HumanPlayer{name: "Anda", marker: "A", ui: &ui}
   board := new(testBoard)
@@ -46,9 +49,9 @@ func TestSelectSpot(t *testing.T) {
 }
 
 func TestSelectAvailableSpot(t *testing.T) {
-  stdin := testSTDIN{}
+  stdin := new(testSTDIN)
   stdin.buffer.WriteString("3 6")
-  stdout := testSTDOUT{}
+  stdout := new(testSTDOUT)
   ui := testUI{input: stdin, output: stdout}
   humanPlayer := HumanPlayer{name: "Anda", marker: "A", ui: &ui}
   board := new(testBoard)
@@ -66,6 +69,16 @@ type testBoard struct {
 func (board *testBoard) AvailableSpots() []int {
   return board.availableSpots
 }
+
+func (board *testBoard) SpotIsAvailable(spot int) bool {return false}
+func (board *testBoard) FillSpot(spot int){}
+func (board *testBoard) WinningMarker() string{return ""}
+func (board *testBoard) IsBoardSolved() bool{return false}
+func (board *testBoard) Size() int{return 0}
+func (board *testBoard) Markers() [2]string{return [2]string{}}
+func (board *testBoard) Surface() []string{return []string{}}
+func (board *testBoard) IsTiedBoard() bool{return false}
+func (board *testBoard) NextMarker() string{return ""}
 
 type testSTDIN struct {
   buffer bytes.Buffer
@@ -85,14 +98,16 @@ func (p *testSTDOUT) Print(s string) {
 }
 
 type testUI struct{
-  input testSTDIN
-  output testSTDOUT
+  input *testSTDIN
+  output *testSTDOUT
 }
 
-func (ui *testUI) Read() string{
+func (ui testUI) Read() string{
   return ui.input.Read()
 }
 
-func (ui *testUI) Print(s string) {
-  ui.output.Print(s)
+func (ui testUI) Print(strings ...string) {
+  for _, s := range strings {
+    ui.output.Print(s)
+  }
 }

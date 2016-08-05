@@ -3,21 +3,17 @@ package players
 import (
   "strings"
   "strconv"
+  "ttt/ui"
+  "ttt/board"
 )
 
 type HumanPlayer struct {
   name, marker string
-  ui interface{
-    Read() string
-  }
+  ui ui.UI
 }
 
-func NewHumanPlayer(name, marker string) *HumanPlayer{
-  return &HumanPlayer{name: name, marker: marker}
-}
-
-type GameBoard interface {
-  AvailableSpots() []int
+func NewHumanPlayer(name, marker string, ui ui.UI) *HumanPlayer{
+  return &HumanPlayer{name: name, marker: marker, ui: ui}
 }
 
 func (h HumanPlayer) Name() string{
@@ -28,7 +24,7 @@ func (h HumanPlayer) Marker() string{
   return h.marker
 }
 
-func (h HumanPlayer) SelectSpot(board GameBoard) int {
+func (h HumanPlayer) SelectSpot(board board.Board) int {
   spot := -1
   spotIsUnavailable := true
   for spotIsUnavailable{
