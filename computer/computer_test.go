@@ -7,7 +7,7 @@ import (
   "ttt/board"
 //  "fmt"
 )
-/*
+
 func TestName(t *testing.T) {
   computerPlayer := ComputerPlayer{name: "Walle"}
   if name := computerPlayer.Name(); name != "Walle" {
@@ -48,7 +48,7 @@ func TestSelectFirstSpot(t *testing.T) {
     t.Error("Expected spot to be 4, but it was", spot)
   }
 }
-*/
+
 func TestSelectWinningSpot(t *testing.T) {
   stdin := new(testSTDIN)
   stdout := new(testSTDOUT)
@@ -59,6 +59,20 @@ func TestSelectWinningSpot(t *testing.T) {
 
   if spot := computerPlayer.SelectSpot(board); spot != 8 {
     t.Error("Expected spot to be 8, but it was", spot)
+  }
+}
+
+
+func TestStopOpponentFromWinning(t *testing.T) {
+  stdin := new(testSTDIN)
+  stdout := new(testSTDOUT)
+  ui := testUI{input: stdin, output: stdout}
+  computerPlayer := ComputerPlayer{name: "Wallee", marker: "W", ui: &ui}
+  board := tttboard.NewBoard(tttboard.Params{Size: 9, Markers: [2]string{"W", "I"}})
+  fillSpots(board, []int{0, 1, 5, 4})
+
+  if spot := computerPlayer.SelectSpot(board); spot != 7 {
+    t.Error("Expected spot to be 7, but it was", spot)
   }
 }
 

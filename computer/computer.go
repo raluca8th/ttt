@@ -29,15 +29,21 @@ func (h ComputerPlayer) SelectSpot(board board.Board) int {
   } else {
     for _, spot := range availableSpots(board){
       board.FillSpot(spot)
-      fmt.Println(board)
-      fmt.Println(spot)
       if board.IsBoardSolved(){
         return spot
+      } else {
+        board.FillSpot(spot)
+        if board.IsBoardSolved(){
+          fmt.Println(board)
+          return spot
+        } else{
+          board.ResetSpot(spot)
+        }
       }
       board.ResetSpot(spot)
     }
   }
-  return 0
+  return -1
 }
 
 func availableSpots(board board.Board) []int{
