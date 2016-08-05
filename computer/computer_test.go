@@ -5,6 +5,7 @@ import (
   "bytes"
   "ttt/tttBoard"
   "ttt/board"
+  "math/rand"
 //  "fmt"
 )
 
@@ -37,28 +38,16 @@ func TestNewComputerPlayer(t * testing.T){
   }
 }
 
-func TestSelectFirstSpot(t *testing.T) {
-  stdin := new(testSTDIN)
-  stdout := new(testSTDOUT)
-  ui := testUI{input: stdin, output: stdout}
-  computerPlayer := ComputerPlayer{name: "Wallee", marker: "W", ui: &ui}
-  board := tttboard.NewBoard(tttboard.Params{Size: 9, Markers: [2]string{"W", "I"}})
-
-  if spot := computerPlayer.SelectSpot(board); spot != 4 {
-    t.Error("Expected spot to be 4, but it was", spot)
-  }
-}
-
 func TestSelectWinningSpot(t *testing.T) {
   stdin := new(testSTDIN)
   stdout := new(testSTDOUT)
   ui := testUI{input: stdin, output: stdout}
   computerPlayer := ComputerPlayer{name: "Wallee", marker: "W", ui: &ui}
   board := tttboard.NewBoard(tttboard.Params{Size: 9, Markers: [2]string{"W", "I"}})
-  fillSpots(board, []int{0, 3, 4, 5})
+  fillSpots(board, []int{0, 3, 1, 5})
 
-  if spot := computerPlayer.SelectSpot(board); spot != 8 {
-    t.Error("Expected spot to be 8, but it was", spot)
+  if spot := computerPlayer.SelectSpot(board); spot != 2 {
+    t.Error("Expected spot to be 2, but it was", spot)
   }
 }
 
@@ -73,6 +62,39 @@ func TestStopOpponentFromWinning(t *testing.T) {
 
   if spot := computerPlayer.SelectSpot(board); spot != 7 {
     t.Error("Expected spot to be 7, but it was", spot)
+  }
+}
+
+func TestSelectsSpotWithTheBestChanceOfWinning(t *testing.T) {
+  stdin := new(testSTDIN)
+  stdout := new(testSTDOUT)
+  ui := testUI{input: stdin, output: stdout}
+  computerPlayer := ComputerPlayer{name: "Wallee", marker: "W", ui: &ui}
+  board := tttboard.NewBoard(tttboard.Params{Size: 9, Markers: [2]string{"W", "I"}})
+
+  for true {
+    computerSpot := computerPlayer.SelectSpot(board)
+    fillSpots(board, []int{computerSpot})
+    t.Log("computer", computerSpot)
+    if board.IsTiedBoard() || board.IsBoardSolved() {
+      break
+    }
+    availableSpots := board.AvailableSpots()
+    t.Log(availableSpots)
+    opponentPick := availableSpots[rand.Intn(len(availableSpots))]
+    t.Log("opponent", opponentPick)
+    fillSpots(board, []int{opponentPick})
+    t.Log(board)
+    if board.IsTiedBoard() || board.IsBoardSolved() {
+      break
+    }
+  }
+
+  t.Log("FINAL STATE", board)
+  t.Log("WinnerMarker", board.WinningMarker())
+
+  if winnerMarker := board.WinningMarker(); winnerMarker == "I" {
+    t.Error("Expected spot to be W, but it was", winnerMarker)
   }
 }
 
