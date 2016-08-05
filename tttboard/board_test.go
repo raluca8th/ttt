@@ -1,8 +1,9 @@
-package board
+package tttboard
 
 import (
   "testing"
   "reflect"
+  "ttt/board"
 )
 
 func TestDefaultSize(t *testing.T) {
@@ -153,7 +154,7 @@ func TestNextMarker4X4Board(t *testing.T) {
   }
 }
 
-func fillSpots(b *Board, spots []int) {
+func fillSpots(b board.Board, spots []int) {
   for _, index := range spots {
     b.FillSpot(index)
   }
