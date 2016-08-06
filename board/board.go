@@ -11,4 +11,5 @@ type Board interface {
   Surface() []string
   IsTiedBoard() bool
   NextMarker() string
+  ResetSpot(spot int)
 }
