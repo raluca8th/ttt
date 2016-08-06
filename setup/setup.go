@@ -4,8 +4,9 @@ import (
   "ttt/game"
   "strings"
   "ttt/ui"
-  "ttt/cli"
-  "ttt/players"
+  "ttt/zen"
+  "ttt/player"
+  "ttt/computer"
 )
 
 type Setup struct{
@@ -17,20 +18,40 @@ func (s *Setup) Welcome(){
   s.print(welcome)
 }
 
-func (s *Setup) GeneratePlayers() []game.Player{
-  s.playersArray = append(s.playersArray, s.createPlayer())
-  s.playersArray = append(s.playersArray, s.createPlayer())
-  return s.playersArray
+func (s *Setup) GeneratePlayers(selection string) []game.Player{
+  switch selection {
+  case "1":
+    s.playersArray = append(s.playersArray, s.createHumanPlayer())
+    s.playersArray = append(s.playersArray, s.createHumanPlayer())
+    return s.playersArray
+  case "2":
+    s.playersArray = append(s.playersArray, s.createHumanPlayer())
+    s.playersArray = append(s.playersArray, s.createComputerPlayer())
+    return s.playersArray
+  case "3":
+    s.playersArray = append(s.playersArray, s.createComputerPlayer())
+    s.playersArray = append(s.playersArray, s.createComputerPlayer())
+    return s.playersArray
+  default:
+    s.playersArray = append(s.playersArray, s.createHumanPlayer())
+    s.playersArray = append(s.playersArray, s.createHumanPlayer())
+    return s.playersArray
+  }
 }
 
-func (s *Setup) createPlayer() game.Player{
-  name := s.GetPlayerName()
-  marker := s.GetPlayerMarker()
-  ui := cli.CLI{}
-  return *players.NewHumanPlayer(name, marker, ui)
+func (s *Setup) createHumanPlayer() game.Player{
+  name := s.getPlayerName()
+  marker := s.getPlayerMarker()
+  return player.NewHumanPlayer(name, marker, s.Ui)
 }
 
-func (s *Setup) GetPlayerName() string{
+func (s *Setup) createComputerPlayer() game.Player{
+  name := s.getPlayerName()
+  marker := s.getPlayerMarker()
+  return computer.NewComputerPlayer(name, marker, s.Ui)
+}
+
+func (s *Setup) getPlayerName() string{
   var name string
   for true {
     name := s.validateInput(playerName)
@@ -43,7 +64,7 @@ func (s *Setup) GetPlayerName() string{
   return name
 }
 
-func (s *Setup) GetPlayerMarker() string{
+func (s *Setup) getPlayerMarker() string{
   var marker  string
   for true {
     marker := s.validateInput(playerMarker)
@@ -56,18 +77,30 @@ func (s *Setup) GetPlayerMarker() string{
   return marker
 }
 
-func (s *Setup) GetGameSize() string{
+func (s *Setup) getGameSize() string{
   size := emptySelection
-  s.print(gameSizeSelection)
   for true {
+    s.print(gameSizeSelection)
     size := s.getUserInput()
     if validGameSize(size) {
       return size
     }
     s.print(invalidSelection)
-    s.print(gameSizeSelection)
   }
   return size
+}
+
+func (s *Setup) GetGameType() string{
+  selection := emptySelection
+  for true {
+    s.print(gameTypeSelection)
+    selection := s.getUserInput()
+    if validGameType(selection) {
+      return selection
+    }
+    s.print(invalidSelection)
+  }
+  return selection
 }
 
 func (s *Setup) validateInput(message string) string{
@@ -93,11 +126,15 @@ func (s *Setup) getUserInput() string{
 }
 
 func validGameSize(size string) bool{
-  return size == "1" || size == "2"
+  return zen.IncludesString(size, []string{"1", "2"})
+}
+
+func validGameType(size string) bool{
+  return zen.IncludesString(size, []string{"1", "2", "3"})
 }
 
 func (s *Setup) validInput(input string) bool{
-  return strings.TrimSpace(input) != ""
+  return strings.TrimSpace(input) != emptySelection
 }
 
 const (
@@ -108,6 +145,6 @@ const (
   markerNotAvailable = "Marker not available. Please enter another name\n"
   playerMarker = "Please enter player marker\n"
   invalidSelection = "Invalid Selection\n"
-  gameSizeSelection = "Please select game type\n\t 1. Select 1 for 3X3 board \n\t 2. Select 2 for 4X4 board\n"
+  gameSizeSelection = "Please select board size\n\t 1. Select 1 for 3X3 board \n\t 2. Select 2 for 4X4 board\n"
+  gameTypeSelection = "Please select game type\n\t 1. Select 1 for Human vs. Human \n\t 2. Select 2 Human vs. Computer \n\t 3. Select 3 for Computer vs. Computer\n"
 )
-

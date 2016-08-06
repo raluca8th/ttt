@@ -22,7 +22,7 @@ func TestNameSelection(t *testing.T){
   setUp := Setup{Ui: testUI}
   expectedMessage := "Anda"
 
-  if playerName := setUp.GetPlayerName(); playerName != expectedMessage {
+  if playerName := setUp.getPlayerName(); playerName != expectedMessage {
     t.Error("Expected player name to be 'Anda', but got", playerName)
   }
 }
@@ -33,8 +33,18 @@ func TestValidNameSelection(t *testing.T){
   setUp := Setup{Ui: testUI}
   expectedMessage := "Anda"
 
-  if playerName := setUp.GetPlayerName(); playerName != expectedMessage {
+  if playerName := setUp.getPlayerName(); playerName != expectedMessage {
     t.Error("Expected player name to be 'Anda', but got", playerName)
+  }
+}
+
+func TestGetGameType(t *testing.T){
+  testUI := TestUI{Input: new(testSTDIN), Output: new(testSTDOUT)}
+  testUI.Populate("5 7 3")
+  setup := Setup{Ui: testUI}
+
+  if gameType := setup.GetGameType(); gameType != "3" {
+    t.Error("Expected game type to be 3, but got", gameType)
   }
 }
 
@@ -44,7 +54,7 @@ func TestMarkerSelection(t *testing.T){
   setUp := Setup{Ui: testUI}
   expectedMessage := "A"
 
-  if playerMarker := setUp.GetPlayerMarker(); playerMarker != expectedMessage {
+  if playerMarker := setUp.getPlayerMarker(); playerMarker != expectedMessage {
     t.Error("Expected marker to be 'A', but got", playerMarker)
   }
 }
@@ -55,7 +65,7 @@ func TestValidMarkerSelection(t *testing.T){
   setUp := Setup{Ui: testUI}
   expectedMessage := "A"
 
-  if playerMarker := setUp.GetPlayerMarker(); playerMarker != expectedMessage {
+  if playerMarker := setUp.getPlayerMarker(); playerMarker != expectedMessage {
     t.Error("Expected marker to be 'A', but got", playerMarker)
   }
 }
@@ -66,7 +76,7 @@ func TestGameSize(t *testing.T){
   setUp := Setup{Ui: testUI}
   expectedMessage := "1"
 
-  if gameSize := setUp.GetGameSize(); gameSize != expectedMessage {
+  if gameSize := setUp.getGameSize(); gameSize != expectedMessage {
     t.Error("Expected 1, but got", gameSize)
   }
 }
@@ -77,31 +87,16 @@ func TestValidGameSize(t *testing.T){
   setUp := Setup{Ui: testUI}
   expectedMessage := "2"
 
-  if gameSize := setUp.GetGameSize(); gameSize != expectedMessage {
+  if gameSize := setUp.getGameSize(); gameSize != expectedMessage {
     t.Error("Expected 2, but got", gameSize)
   }
 }
 
-func TestCreatePlayer(t *testing.T){
-  testUI := TestUI{Input: new(testSTDIN), Output: new(testSTDOUT)}
-  testUI.Populate("Anda A")
-  setup := Setup{Ui: testUI}
-  player := setup.createPlayer()
-
-  if playerName := player.Name(); playerName != "Anda " {
-    t.Error("Expected player name to be Anda, but it was", playerName)
-  }
-
-  if playerMarker := player.Marker(); playerMarker != "A" {
-    t.Error("Expected marker to be 'A', but got", playerMarker)
-  }
-}
-
-func TestGeneratePlayers(t *testing.T){
+func TestGenerateHumanPlayers(t *testing.T){
   testUI := TestUI{Input: new(testSTDIN), Output: new(testSTDOUT)}
   testUI.Populate("Anda A Anda Eli A E")
   setup := Setup{Ui: testUI}
-  players := setup.GeneratePlayers()
+  players := setup.GeneratePlayers("1")
   player1 := players[0]
   player2 := players[1]
 
@@ -119,6 +114,56 @@ func TestGeneratePlayers(t *testing.T){
 
   if player2Marker := player2.Marker(); player2Marker != "E" {
     t.Error("Expected marker to be 'E', but got", player2Marker)
+  }
+}
+
+func TestGenerateComputerPlayers(t *testing.T){
+  testUI := TestUI{Input: new(testSTDIN), Output: new(testSTDOUT)}
+  testUI.Populate("Wallee W Wallee Eve W E")
+  setup := Setup{Ui: testUI}
+  players := setup.GeneratePlayers("3")
+  player1 := players[0]
+  player2 := players[1]
+
+  if player1Name := player1.Name(); player1Name != "Wallee " {
+    t.Error("Expected player name to be Wallee, but it was", player1Name)
+  }
+
+  if player1Marker := player1.Marker(); player1Marker != "W " {
+    t.Error("Expected marker to be 'W', but got", player1Marker)
+  }
+
+  if player2Name := player2.Name(); player2Name != "Eve " {
+    t.Error("Expected player name to be Eve, but it was", player2Name)
+  }
+
+  if player2Marker := player2.Marker(); player2Marker != "E" {
+    t.Error("Expected marker to be 'E', but got", player2Marker)
+  }
+}
+
+func TestGenerateHumanComputerPlayers(t *testing.T){
+  testUI := TestUI{Input: new(testSTDIN), Output: new(testSTDOUT)}
+  testUI.Populate("Anda A Anda Wallee A W")
+  setup := Setup{Ui: testUI}
+  players := setup.GeneratePlayers("2")
+  player1 := players[0]
+  player2 := players[1]
+
+  if player1Name := player1.Name(); player1Name != "Anda " {
+    t.Error("Expected player name to be Anda, but it was", player1Name)
+  }
+
+  if player1Marker := player1.Marker(); player1Marker != "A " {
+    t.Error("Expected marker to be 'A', but got", player1Marker)
+  }
+
+  if player2Name := player2.Name(); player2Name != "Wallee " {
+    t.Error("Expected player name to be Wallee, but it was", player2Name)
+  }
+
+  if player2Marker := player2.Marker(); player2Marker != "W" {
+    t.Error("Expected marker to be 'W', but got", player2Marker)
   }
 }
 
