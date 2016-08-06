@@ -79,6 +79,7 @@ func (board *testBoard) Markers() [2]string{return [2]string{}}
 func (board *testBoard) Surface() []string{return []string{}}
 func (board *testBoard) IsTiedBoard() bool{return false}
 func (board *testBoard) NextMarker() string{return ""}
+func (board *testBoard) ResetSpot(spot int) {}
 
 type testSTDIN struct {
   buffer bytes.Buffer
