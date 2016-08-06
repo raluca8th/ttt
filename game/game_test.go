@@ -51,7 +51,7 @@ func TestTakeTurnCurrentPlayer(t *testing.T){
   players := []Player{player1, player2}
   ui := new(testUI)
   g := NewGame(players, 9, ui)
-  g.TakeTurn(player1)
+  g.takeTurn(player1)
 
   if spotIsAvailable := g.Board().SpotIsAvailable(4); spotIsAvailable != false{
     t.Error("Expected spot available to return false, but it returned", spotIsAvailable)
@@ -104,7 +104,7 @@ func TestGameWinner(t *testing.T){
   g := NewGame(players, 9, ui)
   g.PlayGame()
 
-  if winnerName := g.Winner().Name(); winnerName != "Anda"{
+  if winnerName := g.winner().Name(); winnerName != "Anda"{
     t.Error("Expected winner name to be Anda, but it was", winnerName)
   }
 }

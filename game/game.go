@@ -26,35 +26,35 @@ func NewGame(players []Player, size int, ui ui.UI) *Game{
   return &Game{players: players, board: board, ui: ui}
 }
 
-func (g Game) Players() []Player{
+func (g *Game) Players() []Player{
   return g.players
 }
 
-func (g Game) Board() board.Board{
+func (g *Game) Board() board.Board{
   return g.board
 }
 
-func (g Game) TakeTurn(player Player){
-  g.ui.Print("Please select your spot\n")
-  spot := player.SelectSpot(g.Board())
-  if g.Board().SpotIsAvailable(spot) {
-    g.board.FillSpot(spot)
-  }
-}
-
-func (g Game) PlayGame(){
+func (g *Game) PlayGame(){
   for true {
     for _, player := range g.Players() {
-      g.TakeTurn(player)
+      g.takeTurn(player)
       g.printBoard(g.Board().Surface())
       if g.gameOver() {
+        g.gameOverMessage()
         return
       }
     }
   }
 }
 
-func (g Game) Winner() Player{
+func (g *Game) takeTurn(player Player){
+  spot := player.SelectSpot(g.Board())
+  if g.Board().SpotIsAvailable(spot) {
+    g.board.FillSpot(spot)
+  }
+}
+
+func (g *Game) winner() Player{
   var winner Player
   winnerMarker := g.Board().WinningMarker()
   for _, player := range g.Players() {
@@ -65,7 +65,15 @@ func (g Game) Winner() Player{
   return winner
 }
 
-func (g Game) gameOver() bool{
+func (g *Game) gameOverMessage(){
+  if g.winner() == nil {
+    g.ui.Print(tie)
+  } else {
+    g.ui.Print(g.winner().Name(), congrats)
+  }
+}
+
+func (g *Game) gameOver() bool{
   return g.Board().IsBoardSolved()
 }
 
@@ -76,7 +84,7 @@ func getMarkersFromPlayers(players []Player) [2]string{
   return markers
 }
 
-func (g Game) printBoard(board []string){
+func (g *Game) printBoard(board []string){
   for i, value := range board{
     if value != "" {
       g.ui.Print("__", value, "_")
@@ -89,3 +97,8 @@ func (g Game) printBoard(board []string){
     }
   }
 }
+
+const (
+  tie = "Game ended in a tie\n"
+  congrats = "! Congrats, you won the game!"
+)
