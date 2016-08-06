@@ -13,7 +13,7 @@ type TTTBoard struct {
 }
 
 func NewBoard(params Params) board.Board {
-  board := &TTTBoard{size: params.Size, markers: params.Markers}
+  board := TTTBoard{size: params.Size, markers: params.Markers}
   board.setDefaultSize()
   board.setDefaultMarkers()
   board.setSurface()
@@ -32,12 +32,16 @@ func (b TTTBoard) Surface() []string {
   return b.surface
 }
 
-func (b *TTTBoard) FillSpot(spot int) {
+func (b TTTBoard) FillSpot(spot int) {
   b.surface[spot] = b.NextMarker()
 }
 
 func (b TTTBoard) SpotIsAvailable(spot int) bool{
   return b.surface[spot] == ""
+}
+
+func (b TTTBoard) ResetSpot(spot int){
+   b.surface[spot] = ""
 }
 
 func (b TTTBoard) AvailableSpots() []int{
