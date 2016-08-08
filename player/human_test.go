@@ -50,12 +50,12 @@ func TestSelectSpot(t *testing.T) {
 
 func TestSelectAvailableSpot(t *testing.T) {
   stdin := new(testSTDIN)
-  stdin.buffer.WriteString("3 6")
+  stdin.buffer.WriteString("f 3 6")
   stdout := new(testSTDOUT)
   ui := testUI{input: stdin, output: stdout}
   humanPlayer := HumanPlayer{name: "Anda", marker: "A", ui: &ui}
   board := new(testBoard)
-  board.availableSpots = []int{6}
+  board.availableSpots = []int{0, 6}
 
   if spot := humanPlayer.SelectSpot(board); spot != 6 {
     t.Error("Expected spot to be 6, but it was", spot)
