@@ -24,6 +24,7 @@ func (c *ComputerPlayer) Marker() string{
 }
 
 func (c *ComputerPlayer) SelectSpot(board board.Board) int{
+  c.ui.Print(computerThinking)
   var depth int
   return c.minimax(board, depth)
 }
@@ -91,3 +92,7 @@ func (c *ComputerPlayer) maxNode(board board.Board) bool{
 func availableSpots(board board.Board) []int{
   return board.AvailableSpots()
 }
+
+const (
+  computerThinking = "Minimax is now working hard. Think happy thoughts...\n"
+)
