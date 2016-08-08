@@ -92,9 +92,25 @@ func TestValidGameSize(t *testing.T){
   }
 }
 
+func TestGameOrder(t *testing.T){
+  testUI := TestUI{Input: new(testSTDIN), Output: new(testSTDOUT)}
+  testUI.Populate("Anda A Eli E 2")
+  setup := Setup{Ui: testUI}
+  players := setup.GeneratePlayers("2")
+  player1 := players[0]
+
+  if player1Name := player1.Name(); player1Name != "Eli " {
+    t.Error("Expected player name to be Eli, but it was", player1Name)
+  }
+
+  if player1Marker := player1.Marker(); player1Marker != "E " {
+    t.Error("Expected marker to be 'E', but got", player1Marker)
+  }
+}
+
 func TestGenerateHumanPlayers(t *testing.T){
   testUI := TestUI{Input: new(testSTDIN), Output: new(testSTDOUT)}
-  testUI.Populate("Anda A Anda Eli A E")
+  testUI.Populate("Anda A Anda Eli A E 1")
   setup := Setup{Ui: testUI}
   players := setup.GeneratePlayers("1")
   player1 := players[0]
@@ -112,14 +128,14 @@ func TestGenerateHumanPlayers(t *testing.T){
     t.Error("Expected player name to be Eli, but it was", player2Name)
   }
 
-  if player2Marker := player2.Marker(); player2Marker != "E" {
+  if player2Marker := player2.Marker(); player2Marker != "E " {
     t.Error("Expected marker to be 'E', but got", player2Marker)
   }
 }
 
 func TestGenerateComputerPlayers(t *testing.T){
   testUI := TestUI{Input: new(testSTDIN), Output: new(testSTDOUT)}
-  testUI.Populate("Wallee W Wallee Eve W E")
+  testUI.Populate("Wallee W Wallee Eve W E 1")
   setup := Setup{Ui: testUI}
   players := setup.GeneratePlayers("3")
   player1 := players[0]
@@ -137,14 +153,14 @@ func TestGenerateComputerPlayers(t *testing.T){
     t.Error("Expected player name to be Eve, but it was", player2Name)
   }
 
-  if player2Marker := player2.Marker(); player2Marker != "E" {
+  if player2Marker := player2.Marker(); player2Marker != "E " {
     t.Error("Expected marker to be 'E', but got", player2Marker)
   }
 }
 
 func TestGenerateHumanComputerPlayers(t *testing.T){
   testUI := TestUI{Input: new(testSTDIN), Output: new(testSTDOUT)}
-  testUI.Populate("Anda A Anda Wallee A W")
+  testUI.Populate("Anda A Anda Wallee A W 1")
   setup := Setup{Ui: testUI}
   players := setup.GeneratePlayers("2")
   player1 := players[0]
@@ -162,7 +178,7 @@ func TestGenerateHumanComputerPlayers(t *testing.T){
     t.Error("Expected player name to be Wallee, but it was", player2Name)
   }
 
-  if player2Marker := player2.Marker(); player2Marker != "W" {
+  if player2Marker := player2.Marker(); player2Marker != "W " {
     t.Error("Expected marker to be 'W', but got", player2Marker)
   }
 }

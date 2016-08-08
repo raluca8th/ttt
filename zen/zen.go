@@ -11,6 +11,15 @@ func Contains(s []int, e int) bool {
   return false
 }
 
+func ContainsString(s []string, e string) bool {
+  for _, a := range s {
+    if a == e {
+      return true
+    }
+  }
+  return false
+}
+
 func ToString(slice []int) string {
   var printable string
   for _, value := range slice {
@@ -66,4 +75,12 @@ func IncludesString(s string, collection []string) bool{
     }
   }
   return false
+}
+
+func IntToStringSlice(intSlice []int) []string{
+  var stringSlice []string
+  for _, value := range intSlice {
+    stringSlice = append(stringSlice, strconv.Itoa(value))
+  }
+  return stringSlice
 }
