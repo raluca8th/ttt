@@ -7,7 +7,7 @@ import "strings"
 
 func TestHumanVsHumanGame(t *testing.T){
   stdin := new(testSTDIN)
-  stdin.populateBuffer("1 1 Anda X Eli Y 1 4 2 3")
+  stdin.populateBuffer("1 1 Anda X Eli Y 1 0 3 1 4 2")
   stdout := new(testSTDOUT)
   ui := testUI{input: stdin, output: stdout}
   g := &gameInitializer{ui: ui}
@@ -22,7 +22,7 @@ func TestHumanVsHumanGame(t *testing.T){
 
 func TestHumanVsComputer(t *testing.T){
   stdin := new(testSTDIN)
-  stdin.populateBuffer("1 2 Anda X Wallee W 1 4 2 3 5 6")
+  stdin.populateBuffer("1 2 Anda X Wallee W 1 1 4 2 3 5 6")
   stdout := new(testSTDOUT)
   ui := testUI{input: stdin, output: stdout}
   g := &gameInitializer{ui: ui}
@@ -36,7 +36,7 @@ func TestHumanVsComputer(t *testing.T){
 
 func TestComputerVsComputer(t *testing.T){
   stdin := new(testSTDIN)
-  stdin.populateBuffer("1 3 Eve E Wallee W")
+  stdin.populateBuffer("1 3 Eve E Wallee W 1")
   stdout := new(testSTDOUT)
   ui := testUI{input: stdin, output: stdout}
   g := &gameInitializer{ui: ui}
