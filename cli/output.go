@@ -8,6 +8,10 @@ type Printer interface {
 
 type STDOUTprinter struct {}
 
-func (p *STDOUTprinter) Print(s string){
+func (p *STDOUTprinter) Println(s string){
   fmt.Println(s)
+}
+
+func (p *STDOUTprinter) Print(s string){
+  fmt.Print(s)
 }
