@@ -3,9 +3,9 @@ package player
 import (
   "strings"
   "strconv"
-  "ttt/zen"
-  "ttt/ui"
-  "ttt/board"
+  "github.com/raluca8th/ttt/zen"
+  "github.com/raluca8th/ttt/ui"
+  "github.com/raluca8th/ttt/board"
 )
 
 type HumanPlayer struct {

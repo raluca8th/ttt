@@ -3,7 +3,7 @@ package tttboard
 import (
   "testing"
   "reflect"
-  "ttt/board"
+  "github.com/raluca8th/ttt/board"
 )
 
 func TestDefaultSize(t *testing.T) {

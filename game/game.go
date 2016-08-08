@@ -2,9 +2,9 @@ package game
 
 import (
   "math"
-  "ttt/tttboard"
-  "ttt/board"
-  "ttt/ui"
+  "github.com/raluca8th/ttt/tttboard"
+  "github.com/raluca8th/ttt/board"
+  "github.com/raluca8th/ttt/ui"
   "strconv"
 )
 

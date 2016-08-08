@@ -3,8 +3,8 @@ package computer
 import (
   "testing"
   "bytes"
-  "ttt/tttBoard"
-  "ttt/board"
+  "github.com/raluca8th/ttt/tttBoard"
+  "github.com/raluca8th/ttt/board"
   "math/rand"
   "reflect"
 )

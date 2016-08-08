@@ -2,7 +2,7 @@ package game
 
 import (
   "testing"
-  "ttt/tttboard"
+  "github.com/raluca8th/ttt/tttboard"
   "ttt/board"
   "strings"
   "strconv"

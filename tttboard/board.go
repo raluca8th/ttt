@@ -2,8 +2,8 @@ package tttboard
 
 import (
   "math"
-  "ttt/board"
-  "ttt/ui"
+  "github.com/raluca8th/ttt/board"
+  "github.com/raluca8th/ttt/ui"
 )
 
 type TTTBoard struct {

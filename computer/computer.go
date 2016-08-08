@@ -2,8 +2,8 @@ package computer
 
 import (
   "ttt/ui"
-  "ttt/board"
-  "ttt/zen"
+  "github.com/raluca8th/ttt/board"
+  "github.com/raluca8th/tt/zen"
 )
 
 type ComputerPlayer struct {

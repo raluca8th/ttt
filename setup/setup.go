@@ -1,12 +1,12 @@
 package setup
 
 import (
-  "ttt/game"
+  "github.com/raluca8th/ttt/game"
   "strings"
-  "ttt/ui"
-  "ttt/zen"
-  "ttt/player"
-  "ttt/computer"
+  "github.com/raluca8th/ttt/ui"
+  "github.com/raluca8th/ttt/zen"
+  "github.com/raluca8th/ttt/player"
+  "github.com/raluca8th/ttt/computer"
 )
 
 type Setup struct{
@@ -77,7 +77,7 @@ func (s *Setup) getPlayerMarker() string{
   return marker
 }
 
-func (s *Setup) getGameSize() string{
+func (s *Setup) GetGameSize() string{
   size := emptySelection
   for true {
     s.print(gameSizeSelection)
