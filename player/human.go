@@ -31,17 +31,17 @@ func (h *HumanPlayer) SelectSpot(board board.Board) int {
   for spotIsUnavailable{
     h.ui.Print(strings.ToUpper(h.name), spotSelection)
     spotString := h.ui.Read()
-    spot, _ := strconv.Atoi(strings.TrimSpace(spotString))
-    if zen.Contains(board.AvailableSpots(), spot){
+    spotsAvailable := zen.IntToStringSlice(board.AvailableSpots())
+    if zen.ContainsString(spotsAvailable, spotString) {
+      spot, _ := strconv.Atoi(spotString)
       return spot
     }
-    h.ui.Print(unavailableSpot, zen.ToString(board.AvailableSpots()), newLine)
+    h.ui.Print(unavailableSpot, zen.ToString(board.AvailableSpots()), newLine) }
+    return spot
   }
-  return spot
-}
 
-const (
-  spotSelection = ", please select your spot:\n"
-  unavailableSpot = "Not a valid spot. Please select one of: "
-  newLine = "\n"
-)
+  const (
+    spotSelection = ", please select your spot:\n"
+    unavailableSpot = "Not a valid spot. Please select one of: "
+    newLine = "\n"
+  )
