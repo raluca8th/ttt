@@ -6,6 +6,7 @@ import (
   "github.com/raluca8th/ttt/board"
   "github.com/raluca8th/ttt/ui"
   "strconv"
+  "strings"
 )
 
 type Player interface{
@@ -35,6 +36,7 @@ func (g *Game) Board() board.Board{
 }
 
 func (g *Game) PlayGame(){
+  g.printBoard(g.Board().Surface())
   for true {
     for _, player := range g.Players() {
       g.takeTurn(player)
@@ -50,6 +52,8 @@ func (g *Game) PlayGame(){
 func (g *Game) takeTurn(player Player){
   spot := player.SelectSpot(g.Board())
   if g.Board().SpotIsAvailable(spot) {
+    stringSpot := strconv.Itoa(spot)
+    g.ui.Print(strings.ToUpper(player.Name()), " selected spot ", stringSpot, "\n")
     g.board.FillSpot(spot)
   }
 }
@@ -69,7 +73,7 @@ func (g *Game) gameOverMessage(){
   if g.winner() == nil {
     g.ui.Print(tie)
   } else {
-    g.ui.Print(g.winner().Name(), congrats)
+    g.ui.Print(strings.ToUpper(g.winner().Name()), congrats)
   }
 }
 
@@ -85,11 +89,16 @@ func getMarkersFromPlayers(players []Player) [2]string{
 }
 
 func (g *Game) printBoard(board []string){
+  g.ui.Print("\n")
   for i, value := range board{
     if value != "" {
-      g.ui.Print("__", value, "_")
+      g.ui.Print(value, "  ")
     } else {
-      g.ui.Print("__", strconv.Itoa(i), "_")
+      if len(strconv.Itoa(i)) == 2{
+        g.ui.Print(strconv.Itoa(i), " ")
+      } else {
+        g.ui.Print(strconv.Itoa(i), "  ")
+      }
     }
 
     if ((i + 1) % int(math.Sqrt(float64(len(board)))) == 0){
@@ -100,5 +109,5 @@ func (g *Game) printBoard(board []string){
 
 const (
   tie = "Game ended in a tie\n"
-  congrats = "! Congrats, you won the game!"
+  congrats = "! Congrats, you won the game!\n"
 )
