@@ -87,7 +87,7 @@ func TestValidGameSize(t *testing.T){
   setUp := Setup{Ui: testUI}
   expectedMessage := "2"
 
-  if gameSize := setUp.getGameSize(); gameSize != expectedMessage {
+  if gameSize := setUp.GetGameSize(); gameSize != expectedMessage {
     t.Error("Expected 2, but got", gameSize)
   }
 }
