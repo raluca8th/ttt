@@ -77,17 +77,25 @@ func (s *Setup) getPlayerMarker() string{
   return marker
 }
 
-func (s *Setup) GetGameSize() string{
+func (s *Setup) GetGameSize() int{
   size := emptySelection
   for true {
     s.print(gameSizeSelection)
-    size := s.getUserInput()
+    size = s.getUserInput()
     if validGameSize(size) {
-      return size
+      break
     }
     s.print(invalidSelection)
   }
-  return size
+  return sizeFromSelection(size)
+}
+
+func sizeFromSelection(selection string) int{
+  if selection == "1"{
+    return 9
+  } else {
+    return 16
+  }
 }
 
 func (s *Setup) GetGameType() string{

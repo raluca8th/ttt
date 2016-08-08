@@ -72,12 +72,12 @@ func TestValidMarkerSelection(t *testing.T){
 
 func TestGameSize(t *testing.T){
   testUI := TestUI{Input: new(testSTDIN), Output: new(testSTDOUT)}
-  testUI.Populate("1")
+  testUI.Populate("8 1")
   setUp := Setup{Ui: testUI}
-  expectedMessage := "1"
+  expectedSize := 9
 
-  if gameSize := setUp.GetGameSize(); gameSize != expectedMessage {
-    t.Error("Expected 1, but got", gameSize)
+  if gameSize := setUp.GetGameSize(); gameSize != expectedSize {
+    t.Error("Expected 9, but got", gameSize)
   }
 }
 
@@ -85,9 +85,9 @@ func TestValidGameSize(t *testing.T){
   testUI := TestUI{Input: new(testSTDIN), Output: new(testSTDOUT)}
   testUI.Populate("5 0 g 2")
   setUp := Setup{Ui: testUI}
-  expectedMessage := "2"
+  expectedGameSize := 16
 
-  if gameSize := setUp.GetGameSize(); gameSize != expectedMessage {
+  if gameSize := setUp.GetGameSize(); gameSize != expectedGameSize {
     t.Error("Expected 2, but got", gameSize)
   }
 }
