@@ -175,7 +175,7 @@ const (
   playerMarker = "Please enter player marker\n"
   invalidSelection = "Invalid Selection\n"
   gameSizeSelection = "Please select board size\n\t 1. Select 1 for 3X3 board \n\t 2. Select 2 for 4X4 board\n"
-  gameTypeSelection = "Please select game type\n\t 1. Select 1 for Human vs. Human \n\t 2. Select 2 Human vs. Computer \n\t 3. Select 3 for Computer vs. Computer\n"
+  gameTypeSelection = "Please select game type\n\t 1. Select 1 for Human vs. Human \n\t 2. Select 2 for Human vs. Computer \n\t 3. Select 3 for Computer vs. Computer\n"
   gameOrderSelectionFirstPlayer = "Select '1' to start with player "
   gameOrderSelectionSecondPlayer = " or select '2' to start with player "
 )
