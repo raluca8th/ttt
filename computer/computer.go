@@ -3,7 +3,7 @@ package computer
 import (
   "github.com/raluca8th/ttt/ui"
   "github.com/raluca8th/ttt/board"
-  "github.com/raluca8th/tt/zen"
+  "github.com/raluca8th/ttt/zen"
 )
 
 type ComputerPlayer struct {
