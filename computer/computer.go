@@ -4,6 +4,7 @@ import (
   "github.com/raluca8th/ttt/ui"
   "github.com/raluca8th/ttt/board"
   "github.com/raluca8th/ttt/zen"
+  "math/rand"
 )
 
 type ComputerPlayer struct {
@@ -26,9 +27,38 @@ func (c *ComputerPlayer) Marker() string{
 func (c *ComputerPlayer) SelectSpot(board board.Board) int{
   c.ui.Print(computerThinking)
   var depth int
+  availableSpots := board.AvailableSpots()
+  if len(availableSpots) > 13 {
+    return availableSpots[rand.Intn(len(availableSpots))]
+  }
   return c.minimax(board, depth)
 }
 
+/*
+func (c *ComputerPlayer) negamax(board board.Board, depth int) int{
+  var bestScore = map[int]int{}
+
+  if board.IsTiedBoard(){
+    return 0
+  } else if board.IsBoardSolved() {
+    return -1
+  }
+
+  for _, spot := range board.AvailableSpots() {
+    board.FillSpot(spot)
+    bestScore[spot] = -1 * c.negamax(board, depth + 1)
+    board.ResetSpot(spot)
+  }
+
+  bestSpot := zen.MaxValueKey(bestScore)
+  maxScore := zen.MaxValue(bestScore)
+
+  if depth == 0 {
+    return bestSpot
+  }
+  return maxScore
+}
+*/
 func (c *ComputerPlayer) minimax(board board.Board, depth int) int{
   if c.maxNode(board) {
     return c.max(board, depth)
