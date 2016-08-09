@@ -1,7 +1,6 @@
 package game
 
 import (
-  "math"
   "github.com/raluca8th/ttt/tttboard"
   "github.com/raluca8th/ttt/board"
   "github.com/raluca8th/ttt/ui"
