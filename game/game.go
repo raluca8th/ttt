@@ -89,22 +89,7 @@ func getMarkersFromPlayers(players []Player) [2]string{
 }
 
 func (g *Game) printBoard(board []string){
-  g.ui.Print("\n")
-  for i, value := range board{
-    if value != "" {
-      g.ui.Print(value, "  ")
-    } else {
-      if len(strconv.Itoa(i)) == 2{
-        g.ui.Print(strconv.Itoa(i), " ")
-      } else {
-        g.ui.Print(strconv.Itoa(i), "  ")
-      }
-    }
-
-    if ((i + 1) % int(math.Sqrt(float64(len(board)))) == 0){
-      g.ui.Print("\n\n")
-    }
-  }
+  g.ui.PrintBoard(board)
 }
 
 const (

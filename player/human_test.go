@@ -112,3 +112,5 @@ func (ui testUI) Print(strings ...string) {
     ui.output.Print(s)
   }
 }
+
+func (ui testUI) PrintBoard(board []string){}

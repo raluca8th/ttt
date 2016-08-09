@@ -130,5 +130,6 @@ func (p testPlayer) SelectSpot(board board.Board) int{
 type testUI struct{
 }
 
+func (ui testUI) PrintBoard(board []string){}
 func (t testUI) Read() string {return ""}
 func (t testUI) Print(s ...string){}

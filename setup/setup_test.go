@@ -224,6 +224,8 @@ func (ui *TestUI) Populate(s string){
    ui.Input.buffer.WriteString(s)
 }
 
+func (ui TestUI) PrintBoard(board []string){}
+
 type testPlayer struct{
   name, marker string
   mockInput *bytes.Buffer
