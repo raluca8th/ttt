@@ -8,7 +8,7 @@ import (
 func TestWelcome(t *testing.T){
   testUI := TestUI{Input: new(testSTDIN), Output: new(testSTDOUT)}
   setUp := Setup{Ui: testUI}
-  expectedMessage := "Welcome to GO TicTacToe\n"
+  expectedMessage := "\nWelcome to GO TicTacToe with Minimax!\n\n"
   setUp.Welcome()
 
   if welcomeMessage := testUI.CheckOutput(); welcomeMessage != expectedMessage {
@@ -223,6 +223,8 @@ func (ui *TestUI) CheckOutput() string{
 func (ui *TestUI) Populate(s string){
    ui.Input.buffer.WriteString(s)
 }
+
+func (ui TestUI) PrintBoard(board []string){}
 
 type testPlayer struct{
   name, marker string

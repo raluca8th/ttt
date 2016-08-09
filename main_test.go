@@ -77,6 +77,8 @@ func (ui testUI) Read() string{
   return ui.input.Read()
 }
 
+func (ui testUI) PrintBoard(board []string) {}
+
 func (ui testUI) Print(out ...string) {
   for _, s := range out {
     ui.output.Print(s)
