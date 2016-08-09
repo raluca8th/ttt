@@ -168,7 +168,7 @@ func (s *Setup) validInput(input string) bool{
 
 const (
   emptySelection = ""
-  welcome = "Welcome to GO TicTacToe\n"
+  welcome = "\nWelcome to GO TicTacToe with Minimax!\n\n"
   playerName = "Please enter player name\n"
   nameNotAvailable = "Name not available. Please enter another name\n"
   markerNotAvailable = "Marker not available. Please enter another name\n"

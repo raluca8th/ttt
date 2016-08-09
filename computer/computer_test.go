@@ -47,20 +47,6 @@ func TestAvailableSpots(t *testing.T){
   }
 }
 
-func TestSelectWinningSpot(t *testing.T) {
-  stdin := new(testSTDIN)
-  stdout := new(testSTDOUT)
-  ui := testUI{input: stdin, output: stdout}
-  computerPlayer := ComputerPlayer{name: "Wallee", marker: "W", ui: &ui}
-  board := tttboard.NewBoard(tttboard.Params{Size: 9, Markers: [2]string{"W", "I"}})
-  fillSpots(board, []int{0, 3, 1, 5})
-
-  if spot := computerPlayer.SelectSpot(board); spot != 2 {
-    t.Error("Expected spot to be 2, but it was", spot)
-  }
-}
-
-
 func TestStopOpponentFromWinning(t *testing.T) {
   stdin := new(testSTDIN)
   stdout := new(testSTDOUT)
@@ -96,7 +82,7 @@ func TestSelectsSpotWithTheBestChanceOfWinningComputerMovesFirst(t *testing.T) {
   }
 
   if winnerMarker := board.WinningMarker(); winnerMarker == "I" {
-    t.Error("Expected spot to be W, but it was", winnerMarker)
+    t.Error("Expected winner marker to be W, but it was", winnerMarker)
   }
 }
 
@@ -122,7 +108,7 @@ func TestSelectsSpotWithTheBestChanceOfWinningComputerMovesSecond(t *testing.T) 
   }
 
   if winnerMarker := board.WinningMarker(); winnerMarker == "I" {
-    t.Error("Expected spot to be I, but it was", winnerMarker)
+    t.Error("Expected winner marker to be W, but it was", winnerMarker)
   }
 }
 

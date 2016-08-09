@@ -27,47 +27,24 @@ func (c *ComputerPlayer) Marker() string{
 func (c *ComputerPlayer) SelectSpot(board board.Board) int{
   c.ui.Print(computerThinking)
   var depth int
+  alpha := -100
+  beta := 100
   availableSpots := board.AvailableSpots()
   if len(availableSpots) > 13 {
     return availableSpots[rand.Intn(len(availableSpots))]
   }
-  return c.minimax(board, depth)
+  return c.minimax(board, depth, alpha, beta)
 }
 
-/*
-func (c *ComputerPlayer) negamax(board board.Board, depth int) int{
-  var bestScore = map[int]int{}
-
-  if board.IsTiedBoard(){
-    return 0
-  } else if board.IsBoardSolved() {
-    return -1
-  }
-
-  for _, spot := range board.AvailableSpots() {
-    board.FillSpot(spot)
-    bestScore[spot] = -1 * c.negamax(board, depth + 1)
-    board.ResetSpot(spot)
-  }
-
-  bestSpot := zen.MaxValueKey(bestScore)
-  maxScore := zen.MaxValue(bestScore)
-
-  if depth == 0 {
-    return bestSpot
-  }
-  return maxScore
-}
-*/
-func (c *ComputerPlayer) minimax(board board.Board, depth int) int{
+func (c *ComputerPlayer) minimax(board board.Board, depth, alpha, beta int) int{
   if c.maxNode(board) {
-    return c.max(board, depth)
+    return c.max(board, depth, alpha, beta)
   } else {
-    return c.min(board, depth)
+    return c.min(board, depth, alpha, beta)
   }
 }
 
-func (c *ComputerPlayer) max(board board.Board, depth int) int{
+func (c *ComputerPlayer) max(board board.Board, depth, alpha, beta int) int{
   var bestScore = map[int]int{}
 
   if board.IsTiedBoard(){
@@ -78,7 +55,14 @@ func (c *ComputerPlayer) max(board board.Board, depth int) int{
 
   for _, spot := range board.AvailableSpots() {
     board.FillSpot(spot)
-    bestScore[spot] = c.minimax(board, depth + 1)
+    bestScore[spot] = c.minimax(board, depth + 1, alpha, beta)
+    if alpha >= bestScore[spot] {
+      alpha = bestScore[spot]
+    }
+    if beta <= alpha{
+      board.ResetSpot(spot)
+      break
+    }
     board.ResetSpot(spot)
   }
 
@@ -91,7 +75,7 @@ func (c *ComputerPlayer) max(board board.Board, depth int) int{
   return maxScore
 }
 
-func (c *ComputerPlayer) min(board board.Board, depth int) int{
+func (c *ComputerPlayer) min(board board.Board, depth, alpha, beta int) int{
   var bestScore = map[int]int{}
 
   if board.IsTiedBoard(){
@@ -102,7 +86,15 @@ func (c *ComputerPlayer) min(board board.Board, depth int) int{
 
   for _, spot := range board.AvailableSpots() {
     board.FillSpot(spot)
-    bestScore[spot] = c.minimax(board, depth + 1)
+    bestScore[spot] = c.minimax(board, depth + 1, alpha, beta)
+    if beta <= bestScore[spot] {
+      beta = bestScore[spot]
+    }
+
+    if beta <= alpha {
+      board.ResetSpot(spot)
+      break
+    }
     board.ResetSpot(spot)
   }
 

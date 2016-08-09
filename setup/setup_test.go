@@ -8,7 +8,7 @@ import (
 func TestWelcome(t *testing.T){
   testUI := TestUI{Input: new(testSTDIN), Output: new(testSTDOUT)}
   setUp := Setup{Ui: testUI}
-  expectedMessage := "Welcome to GO TicTacToe\n"
+  expectedMessage := "\nWelcome to GO TicTacToe with Minimax!\n\n"
   setUp.Welcome()
 
   if welcomeMessage := testUI.CheckOutput(); welcomeMessage != expectedMessage {
