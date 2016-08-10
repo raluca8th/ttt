@@ -36,6 +36,22 @@ func (b TTTBoard) FillSpot(spot int) {
   b.surface[spot] = b.NextMarker()
 }
 
+func (b TTTBoard) FillAvailableSpot(spot int) board.Board{
+  var boardCopySurface []string
+  boardCopy := &b
+  nextMarker := b.NextMarker()
+  boardSurface := b.Surface()
+  for i, value := range boardSurface{
+    if i == spot {
+      boardCopySurface = append(boardCopySurface, nextMarker)
+    } else {
+      boardCopySurface = append(boardCopySurface, value)
+    }
+  }
+  boardCopy.surface = boardCopySurface
+  return boardCopy
+}
+
 func (b TTTBoard) SpotIsAvailable(spot int) bool{
   return b.surface[spot] == ""
 }
