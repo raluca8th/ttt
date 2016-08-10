@@ -5,7 +5,7 @@ Unbeatable TTT in GO
 
 Go (if you are installing GO now, you need to export the GOROOT and GOPATH)
 
-```brew install go``` or install(https://golang.org/doc/install)
+```brew install go``` or [install](https://golang.org/doc/install)
 
   ```export GOROOT=$HOME/go```
   ```export PATH=$PATH:$GOROOT/bin```
@@ -35,3 +35,7 @@ Verbose:
 With coverage:
 
 ```go test ./... -cover```
+
+
+###Travis
+[Travis builds](https://travis-ci.org/raluca8th/ttt/builds)
