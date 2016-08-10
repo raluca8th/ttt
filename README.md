@@ -22,7 +22,7 @@ Go (if you are installing GO now, you need to export the GOROOT and GOPATH)
 
 Short run (Skips the 4X4 board tests. “How did it get so late so soon?” - Dr. Seuss)
 
-``go test ./... -short```
+```go test ./... -short```
 
 Full run
 

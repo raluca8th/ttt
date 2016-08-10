@@ -23,7 +23,7 @@ func TestPlayers(t *testing.T){
 func TestBoard(t *testing.T){
   player1 := testPlayer{name: "Anda", marker: "A"}
   player2 := testPlayer{name: "Eli", marker: "E"}
-  board := tttboard.NewBoard(tttboard.Params{})
+  board := tttboard.NewBoard(9, [2]string{"X", "Y"})
   g := Game{players: []Player{player1, player2}, board: board}
 
   if boardSize := g.Board().Size(); boardSize != 9{

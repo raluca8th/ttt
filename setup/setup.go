@@ -51,10 +51,16 @@ func (s *Setup) createComputerPlayer() game.Player{
 func (s *Setup) getPlayerName() string{
   var name string
   for true {
-    name := s.validateInput(playerName)
     playersArray := s.playersArray
-    if len(playersArray) == 1  && playersArray[0].Name() == name{
-      s.print(nameNotAvailable) } else {
+    if len(playersArray) == 1 {
+      name := s.validateInput(player2Name)
+      if playersArray[0].Name() == name{
+        s.print(nameNotAvailable)
+      } else {
+        return name
+      }
+    } else {
+      name := s.validateInput(player1Name)
       return name
     }
   }
@@ -64,10 +70,16 @@ func (s *Setup) getPlayerName() string{
 func (s *Setup) getPlayerMarker() string{
   var marker  string
   for true {
-    marker := s.validateInput(playerMarker)
     playersArray := s.playersArray
-    if len(playersArray) == 1  && playersArray[0].Marker() == marker{
-      s.print(markerNotAvailable) } else {
+    if len(playersArray) == 1{
+      marker := s.validateInput(player2Marker)
+      if playersArray[0].Marker() == marker{
+        s.print(markerNotAvailable)
+      } else {
+        return marker
+      }
+    }else {
+      marker := s.validateInput(player1Marker)
       return marker
     }
   }
@@ -169,10 +181,12 @@ func (s *Setup) validInput(input string) bool{
 const (
   emptySelection = ""
   welcome = "\nWelcome to GO TicTacToe with Minimax!\n\n"
-  playerName = "Please enter player name\n"
+  player1Name = "Please enter first player name\n"
+  player2Name = "Please enter second player name\n"
   nameNotAvailable = "Name not available. Please enter another name\n"
   markerNotAvailable = "Marker not available. Please enter another name\n"
-  playerMarker = "Please enter player marker\n"
+  player1Marker = "Please enter first player marker\n"
+  player2Marker = "Please enter second player marker\n"
   invalidSelection = "Invalid Selection\n"
   gameSizeSelection = "Please select board size\n\t 1. Select 1 for 3X3 board \n\t 2. Select 2 for 4X4 board\n"
   gameTypeSelection = "Please select game type\n\t 1. Select 1 for Human vs. Human \n\t 2. Select 2 for Human vs. Computer \n\t 3. Select 3 for Computer vs. Computer\n"
