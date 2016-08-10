@@ -3,6 +3,7 @@ package player
 import (
   "testing"
   "bytes"
+  "github.com/raluca8th/ttt/board"
 )
 
 func TestName(t *testing.T) {
@@ -80,6 +81,7 @@ func (board *testBoard) Surface() []string{return []string{}}
 func (board *testBoard) IsTiedBoard() bool{return false}
 func (board *testBoard) NextMarker() string{return ""}
 func (board *testBoard) ResetSpot(spot int) {}
+func (board *testBoard) FillAvailableSpot(spot int) board.Board{return nil}
 
 type testSTDIN struct {
   buffer bytes.Buffer

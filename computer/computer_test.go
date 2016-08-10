@@ -60,6 +60,22 @@ func TestStopOpponentFromWinning(t *testing.T) {
   }
 }
 
+func TestStopOpponentFromWinning4X4(t *testing.T) {
+  if testing.Short() {
+    t.Skip("Skipping test in short mode")
+  }
+  stdin := new(testSTDIN)
+  stdout := new(testSTDOUT)
+  ui := testUI{input: stdin, output: stdout}
+  computerPlayer := ComputerPlayer{name: "Wallee", marker: "W", ui: &ui}
+  board := tttboard.NewBoard(tttboard.Params{Size: 16, Markers: [2]string{"W", "I"}})
+  fillSpots(board, []int{7, 0, 11, 1, 8, 2})
+
+  if spot := computerPlayer.SelectSpot(board); spot != 3 {
+    t.Error("Expected selection to be 3, but it was", spot)
+  }
+}
+
 func TestSelectsSpotWithTheBestChanceOfWinningComputerMovesFirst(t *testing.T) {
   stdin := new(testSTDIN)
   stdout := new(testSTDOUT)

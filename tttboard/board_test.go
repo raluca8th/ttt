@@ -6,6 +6,19 @@ import (
   "github.com/raluca8th/ttt/board"
 )
 
+func TestFillAvailableSpot(t *testing.T) {
+  board := NewBoard(Params{})
+  newBoard := board.FillAvailableSpot(2)
+
+  if spots := len(newBoard.AvailableSpots()); spots != 8 {
+    t.Error("Expected number of available spots to be 8, but they were", spots)
+  }
+
+  if spots := len(board.AvailableSpots()); spots != 9 {
+    t.Error("Expected number of available spots to be 9, but they were", spots)
+  }
+}
+
 func TestDefaultSize(t *testing.T) {
   board := NewBoard(Params{})
   boardSize := board.Size()

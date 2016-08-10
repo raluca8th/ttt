@@ -12,4 +12,5 @@ type Board interface {
   IsTiedBoard() bool
   NextMarker() string
   ResetSpot(spot int)
+  FillAvailableSpot(spot int) Board
 }

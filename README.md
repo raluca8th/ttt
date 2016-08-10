@@ -20,11 +20,17 @@ Go (if you are installing GO now, you need to export the GOROOT and GOPATH)
 
 ###Running the Tests
 
-``go test ./...``
+Short run (Skips the 4X4 board tests. “How did it get so late so soon?” - Dr. Seuss)
+
+``go test ./... -short```
+
+Full run
+
+```go test ./...```
 
 Verbose:
 
-``go test -v``
+``go test ./... -v -short``
 
 With coverage:
 
