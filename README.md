@@ -5,7 +5,7 @@ Unbeatable TTT in GO
 
 Go (if you are installing GO now, you need to export the GOROOT and GOPATH)
 
-```brew install go``` or install(https://golang.org/doc/install)
+```brew install go``` or [install](https://golang.org/doc/install)
 
   ```export GOROOT=$HOME/go```
   ```export PATH=$PATH:$GOROOT/bin```
@@ -22,7 +22,7 @@ Go (if you are installing GO now, you need to export the GOROOT and GOPATH)
 
 Short run (Skips the 4X4 board tests. “How did it get so late so soon?” - Dr. Seuss)
 
-``go test ./... -short```
+```go test ./... -short```
 
 Full run
 
@@ -35,3 +35,7 @@ Verbose:
 With coverage:
 
 ```go test ./... -cover```
+
+
+###Travis
+[Travis builds](https://travis-ci.org/raluca8th/ttt/builds)

@@ -22,7 +22,7 @@ type Game struct{
 
 func NewGame(players []Player, size int, ui ui.UI) *Game{
   markers := getMarkersFromPlayers(players)
-  board := tttboard.NewBoard(tttboard.Params{Size: size, Markers: markers, UI: ui})
+  board := tttboard.NewBoard(size, markers)
   return &Game{players: players, board: board, ui: ui}
 }
 

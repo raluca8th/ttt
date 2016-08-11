@@ -3,7 +3,6 @@ package tttboard
 import (
   "math"
   "github.com/raluca8th/ttt/board"
-  "github.com/raluca8th/ttt/ui"
 )
 
 type TTTBoard struct {
@@ -12,10 +11,8 @@ type TTTBoard struct {
   surface []string
 }
 
-func NewBoard(params Params) board.Board {
-  board := TTTBoard{size: params.Size, markers: params.Markers}
-  board.setDefaultSize()
-  board.setDefaultMarkers()
+func NewBoard(size int, markers [2]string) board.Board {
+  board := TTTBoard{size: size, markers: markers}
   board.setSurface()
   return board
 }
@@ -139,18 +136,6 @@ func (b *TTTBoard) setSurface() {
   b.surface = make([]string, b.Size())
 }
 
-func (b *TTTBoard) setDefaultSize() {
-  if b.size == 0{
-    b.size = 9
-  }
-}
-
-func (b *TTTBoard) setDefaultMarkers() {
-  if b.markers == [2]string{} {
-    b.markers = [2]string{"X", "Y"}
-  }
-}
-
 func (b TTTBoard) transposeBoard() []string{
   var transposedBoard []string
   incrementor := b.incrementor()
@@ -194,10 +179,4 @@ func even(number int) bool{
 
 func odd(number int) bool{
   return !even(number)
-}
-
-type Params struct {
-  Size int
-  Markers [2]string
-  UI ui.UI
 }

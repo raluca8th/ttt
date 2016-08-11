@@ -39,7 +39,7 @@ func TestNewComputerPlayer(t * testing.T){
 }
 
 func TestAvailableSpots(t *testing.T){
-  board := tttboard.NewBoard(tttboard.Params{Size: 9, Markers: [2]string{"W", "I"}})
+  board := tttboard.NewBoard(9, [2]string{"W", "I"})
   fillSpots(board, []int{0, 1, 2, 4})
 
   if availableSpots := availableSpots(board); !reflect.DeepEqual(availableSpots, []int{3, 5, 6, 7, 8}) {
@@ -52,7 +52,7 @@ func TestStopOpponentFromWinning(t *testing.T) {
   stdout := new(testSTDOUT)
   ui := testUI{input: stdin, output: stdout}
   computerPlayer := ComputerPlayer{name: "Wallee", marker: "W", ui: &ui}
-  board := tttboard.NewBoard(tttboard.Params{Size: 9, Markers: [2]string{"W", "I"}})
+  board := tttboard.NewBoard(9, [2]string{"W", "I"})
   fillSpots(board, []int{0, 1, 5, 4})
 
   if spot := computerPlayer.SelectSpot(board); spot != 7 {
@@ -68,7 +68,7 @@ func TestStopOpponentFromWinning4X4(t *testing.T) {
   stdout := new(testSTDOUT)
   ui := testUI{input: stdin, output: stdout}
   computerPlayer := ComputerPlayer{name: "Wallee", marker: "W", ui: &ui}
-  board := tttboard.NewBoard(tttboard.Params{Size: 16, Markers: [2]string{"W", "I"}})
+  board := tttboard.NewBoard(16, [2]string{"W", "I"})
   fillSpots(board, []int{7, 0, 11, 1, 8, 2})
 
   if spot := computerPlayer.SelectSpot(board); spot != 3 {
@@ -81,7 +81,7 @@ func TestSelectsSpotWithTheBestChanceOfWinningComputerMovesFirst(t *testing.T) {
   stdout := new(testSTDOUT)
   ui := testUI{input: stdin, output: stdout}
   computerPlayer := ComputerPlayer{name: "Wallee", marker: "W", ui: &ui}
-  board := tttboard.NewBoard(tttboard.Params{Size: 9, Markers: [2]string{"W", "I"}})
+  board := tttboard.NewBoard(9, [2]string{"W", "I"})
 
   for true {
     computerSpot := computerPlayer.SelectSpot(board)
@@ -107,7 +107,7 @@ func TestSelectsSpotWithTheBestChanceOfWinningComputerMovesSecond(t *testing.T) 
   stdout := new(testSTDOUT)
   ui := testUI{input: stdin, output: stdout}
   computerPlayer := ComputerPlayer{name: "Wallee", marker: "W", ui: &ui}
-  board := tttboard.NewBoard(tttboard.Params{Size: 9, Markers: [2]string{"I", "W"}})
+  board := tttboard.NewBoard(9, [2]string{"I", "W"})
 
   for true {
     availableSpots := board.AvailableSpots()
