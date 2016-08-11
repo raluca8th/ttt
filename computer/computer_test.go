@@ -2,9 +2,9 @@ package computer
 
 import (
   "testing"
-  "bytes"
   "github.com/raluca8th/ttt/tttboard"
   "github.com/raluca8th/ttt/board"
+  "github.com/raluca8th/ttt/mocks"
   "math/rand"
   "reflect"
 )
@@ -24,9 +24,9 @@ func TestMarker(t *testing.T) {
 }
 
 func TestNewComputerPlayer(t * testing.T){
-  stdin := new(testSTDIN)
-  stdout := new(testSTDOUT)
-  ui := testUI{input: stdin, output: stdout}
+  stdin := new(mocks.TestSTDIN)
+  stdout := new(mocks.TestSTDOUT)
+  ui := mocks.TestUI{Input: stdin, Output: stdout}
   computerPlayer := NewComputerPlayer("Wallee", "W", ui)
 
   if name := computerPlayer.Name(); name != "Wallee" {
@@ -48,9 +48,9 @@ func TestAvailableSpots(t *testing.T){
 }
 
 func TestStopOpponentFromWinning(t *testing.T) {
-  stdin := new(testSTDIN)
-  stdout := new(testSTDOUT)
-  ui := testUI{input: stdin, output: stdout}
+  stdin := new(mocks.TestSTDIN)
+  stdout := new(mocks.TestSTDOUT)
+  ui := mocks.TestUI{Input: stdin, Output: stdout}
   computerPlayer := ComputerPlayer{name: "Wallee", marker: "W", ui: &ui}
   board := tttboard.NewBoard(9, [2]string{"W", "I"})
   fillSpots(board, []int{0, 1, 5, 4})
@@ -62,11 +62,11 @@ func TestStopOpponentFromWinning(t *testing.T) {
 
 func TestStopOpponentFromWinning4X4(t *testing.T) {
   if testing.Short() {
-    t.Skip("Skipping test in short mode")
+    t.Skip("Skipping 4X4 test in short mode")
   }
-  stdin := new(testSTDIN)
-  stdout := new(testSTDOUT)
-  ui := testUI{input: stdin, output: stdout}
+  stdin := new(mocks.TestSTDIN)
+  stdout := new(mocks.TestSTDOUT)
+  ui := mocks.TestUI{Input: stdin, Output: stdout}
   computerPlayer := ComputerPlayer{name: "Wallee", marker: "W", ui: &ui}
   board := tttboard.NewBoard(16, [2]string{"W", "I"})
   fillSpots(board, []int{7, 0, 11, 1, 8, 2})
@@ -77,9 +77,9 @@ func TestStopOpponentFromWinning4X4(t *testing.T) {
 }
 
 func TestSelectsSpotWithTheBestChanceOfWinningComputerMovesFirst(t *testing.T) {
-  stdin := new(testSTDIN)
-  stdout := new(testSTDOUT)
-  ui := testUI{input: stdin, output: stdout}
+  stdin := new(mocks.TestSTDIN)
+  stdout := new(mocks.TestSTDOUT)
+  ui := mocks.TestUI{Input: stdin, Output: stdout}
   computerPlayer := ComputerPlayer{name: "Wallee", marker: "W", ui: &ui}
   board := tttboard.NewBoard(9, [2]string{"W", "I"})
 
@@ -103,9 +103,9 @@ func TestSelectsSpotWithTheBestChanceOfWinningComputerMovesFirst(t *testing.T) {
 }
 
 func TestSelectsSpotWithTheBestChanceOfWinningComputerMovesSecond(t *testing.T) {
-  stdin := new(testSTDIN)
-  stdout := new(testSTDOUT)
-  ui := testUI{input: stdin, output: stdout}
+  stdin := new(mocks.TestSTDIN)
+  stdout := new(mocks.TestSTDOUT)
+  ui := mocks.TestUI{Input: stdin, Output: stdout}
   computerPlayer := ComputerPlayer{name: "Wallee", marker: "W", ui: &ui}
   board := tttboard.NewBoard(9, [2]string{"I", "W"})
 
@@ -125,40 +125,6 @@ func TestSelectsSpotWithTheBestChanceOfWinningComputerMovesSecond(t *testing.T) 
 
   if winnerMarker := board.WinningMarker(); winnerMarker == "I" {
     t.Error("Expected winner marker to be W, but it was", winnerMarker)
-  }
-}
-
-type testSTDIN struct {
-  buffer bytes.Buffer
-}
-
-func (r *testSTDIN) Read() string{
-  input, _ := r.buffer.ReadString(' ')
-  return input
-}
-
-type testSTDOUT struct {
-  buffer bytes.Buffer
-}
-
-func (p *testSTDOUT) Print(s string) {
-  p.buffer.WriteString(s)
-}
-
-type testUI struct{
-  input *testSTDIN
-  output *testSTDOUT
-}
-
-func (ui testUI) Read() string{
-  return ui.input.Read()
-}
-
-func (ui testUI) PrintBoard(board []string){}
-
-func (ui testUI) Print(strings ...string) {
-  for _, s := range strings {
-    ui.output.Print(s)
   }
 }
 

@@ -92,6 +92,6 @@ func (g *Game) printBoard(board []string){
 }
 
 const (
-  tie = "Game ended in a tie\n"
-  congrats = "! Congrats, you won the game!\n"
+  tie = "Game ended in a tie.\n"
+  congrats = " won the game.\n"
 )

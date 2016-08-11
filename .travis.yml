@@ -1,6 +1,6 @@
 language: go
 notifications:
   email:
-    recipients: your.email@host.com
+    recipients: raluca8th@gmail.com
     on_success: change
     on_failure: always
