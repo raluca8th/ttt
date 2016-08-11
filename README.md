@@ -1,25 +1,27 @@
 #Tic Tac Toe
-Unbeatable TTT in GO
+Unbeatable TTT in Go
 
 ###Requirements
 
-GO (if you are installing GO now, you need to export the GOROOT and GOPATH)
+Go version 1.6.3
 
-```brew install go``` or [install](https://golang.org/doc/install)
 
-  ```export GOROOT=$HOME/go```
+If you are installing Go now, you need to export the GOPATH
 
-  ```export PATH=$PATH:$GOROOT/bin```
+  ```brew install go``` OR [install](https://golang.org/doc/install)
 
-  ```export GOPATH=$HOME/<your path>```
+  ```mkdir $HOME/go```
+
+  ```export GOPATH=$HOME/go```
 
 ###Setup
 
-1. Clone this repository in your GOPATH above
+1. ```cd $HOME/go```
+2.  Clone this repository in the GOPATH
 3. ``cd ttt``
 
 ###Play the game
- ``./ttt`` or ```go run main.go```
+ ``./ttt`` OR ```go run main.go```
 
 ###Troubleshoot package access
 
@@ -27,9 +29,11 @@ If it complains it can't find some of the github packages run:
 
  ```go get <package name>``` (e.g. ```go get github.com/raluca8th/ttt/cli```)
 
+*note - you need ```git``` installed to run the ```go get`` commands
+
 ###Running the Tests
 
-Short run (Skips the 4X4 board tests. “How did it get so late so soon?” - Dr. Seuss)
+Short run (Skips the 4X4 board tests which can take up to 7 minutes for the computer player. “How did it get so late so soon?” - Dr. Seuss)
 
 ```go test ./... -short```
 
