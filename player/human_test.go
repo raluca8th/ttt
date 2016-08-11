@@ -2,8 +2,8 @@ package player
 
 import (
   "testing"
-  "bytes"
   "github.com/raluca8th/ttt/board"
+  "github.com/raluca8th/ttt/mocks"
 )
 
 func TestName(t *testing.T) {
@@ -21,9 +21,9 @@ func TestMarker(t *testing.T) {
 }
 
 func TestNewHumanPlayer(t * testing.T){
-  stdin := new(testSTDIN)
-  stdout := new(testSTDOUT)
-  ui := testUI{input: stdin, output: stdout}
+  stdin := new(mocks.TestSTDIN)
+  stdout := new(mocks.TestSTDOUT)
+  ui := mocks.TestUI{Input: stdin, Output: stdout}
   humanPlayer := NewHumanPlayer("Anda", "A", ui)
 
   if name := humanPlayer.Name(); name != "Anda" {
@@ -36,10 +36,10 @@ func TestNewHumanPlayer(t * testing.T){
 }
 
 func TestSelectSpot(t *testing.T) {
-  stdin := new(testSTDIN)
-  stdin.buffer.WriteString("5")
-  stdout := new(testSTDOUT)
-  ui := testUI{input: stdin, output: stdout}
+  stdin := new(mocks.TestSTDIN)
+  stdin.Buffer.WriteString("5")
+  stdout := new(mocks.TestSTDOUT)
+  ui := mocks.TestUI{Input: stdin, Output: stdout}
   humanPlayer := HumanPlayer{name: "Anda", marker: "A", ui: &ui}
   board := new(testBoard)
   board.availableSpots = []int{5}
@@ -50,10 +50,10 @@ func TestSelectSpot(t *testing.T) {
 }
 
 func TestSelectAvailableSpot(t *testing.T) {
-  stdin := new(testSTDIN)
-  stdin.buffer.WriteString("f 3 6")
-  stdout := new(testSTDOUT)
-  ui := testUI{input: stdin, output: stdout}
+  stdin := new(mocks.TestSTDIN)
+  stdin.Buffer.WriteString("f 3 6")
+  stdout := new(mocks.TestSTDOUT)
+  ui := mocks.TestUI{Input: stdin, Output: stdout}
   humanPlayer := HumanPlayer{name: "Anda", marker: "A", ui: &ui}
   board := new(testBoard)
   board.availableSpots = []int{0, 6}
@@ -82,37 +82,3 @@ func (board *testBoard) IsTiedBoard() bool{return false}
 func (board *testBoard) NextMarker() string{return ""}
 func (board *testBoard) ResetSpot(spot int) {}
 func (board *testBoard) FillAvailableSpot(spot int) board.Board{return nil}
-
-type testSTDIN struct {
-  buffer bytes.Buffer
-}
-
-func (r *testSTDIN) Read() string{
-  input, _ := r.buffer.ReadString(' ')
-  return input
-}
-
-type testSTDOUT struct {
-  buffer bytes.Buffer
-}
-
-func (p *testSTDOUT) Print(s string) {
-  p.buffer.WriteString(s)
-}
-
-type testUI struct{
-  input *testSTDIN
-  output *testSTDOUT
-}
-
-func (ui testUI) Read() string{
-  return ui.input.Read()
-}
-
-func (ui testUI) Print(strings ...string) {
-  for _, s := range strings {
-    ui.output.Print(s)
-  }
-}
-
-func (ui testUI) PrintBoard(board []string){}
